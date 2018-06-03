@@ -3,26 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_countwords.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/05 18:50:14 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/03/06 13:27:03 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/06/03 13:52:49 by stestein          #+#    #+#             */
+/*   Updated: 2018/06/03 13:52:58 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int		ft_countwords(char const *s, char c)
 {
 	int words;
+	int i;
 
+	i = 0;
 	words = 0;
-	while (*s)
+	while (s[i])
 	{
-		while (*s == c)
-			s++;
-		if (*s != c && *s != '\0')
+		while (s[i] == c)
+			i++;
+		if (s[i] != c && s[i] != '\0')
 			words++;
-		while (*s != c && *s != '\0')
-			s++;
+		while (s[i] != c && s[i] != '\0')
+			i++;
 	}
 	return (words);
 }
