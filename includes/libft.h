@@ -55,6 +55,13 @@ typedef struct	s_libft
 	char			*ret;
 }				t_libft;
 
+typedef	struct	s_uimax
+{
+	uintmax_t	i_val;
+	size_t		size;
+	char		*retrn;
+}		t_uimax;
+
 int					ft_atoi(const char *str);
 size_t				ft_strlen(const char *str);
 int					ft_strcmp(const char *s1, const char *s2);
