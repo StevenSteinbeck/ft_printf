@@ -85,11 +85,11 @@ char	*ft_wstr_to_str(wchar_t *wstr)
 	head.value = ft_strnew(ft_wstrlen(wstr));
 	while (wstr[head.i_val])
 	{
-		ft_unicode_conv(wstr[head.i_val], ret + head.size);
+		ft_unicode_conv(wstr[head.i_val], head.value + head.size);
 		head.size += ft_unicode_b(wstr[head.i_val]);
 		head.i_val++;
 	}
-	return (head.val);
+	return (head.value);
 }
 
 void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
