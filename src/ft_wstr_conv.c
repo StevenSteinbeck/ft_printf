@@ -81,7 +81,7 @@ char	*ft_wstr_to_str(wchar_t *wstr)
 	t_wstr	head;
 	t_wstr	*top;
 
-	top = malloc(iszeof(t_wstr));
+	top = malloc(sizeof(t_wstr));
 	head.i_val = 0;
 	head.size = 0;
 	head.value = ft_strnew(ft_wstrlen(wstr));
