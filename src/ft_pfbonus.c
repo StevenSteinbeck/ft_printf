@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 16:32:05 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 12:23:23 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 12:32:15 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_bool		ft_pfcolors(t_vector *vector, const char **format)
 		{
 			ft_vector_append(vector, g_colors[head.i][1]);
 			*format = *format + ft_strlen(g_colors[head.i][0]);
-			free(head);
 			return (true);
 		}
 		++head.i;
