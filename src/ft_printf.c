@@ -3,113 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 15:52:02 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/29 16:15:58 by stestein         ###   ########.fr       */
+/*   Created: 2017/03/24 16:57:30 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/04/13 15:52:08 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <libftprintf.h>
 
 int		ft_printf(const char *format, ...)
 {
 	va_list ap;
-	t_printf *head;
+	int		len;
+	char	*ret;
 
-	head = malloc(sizeof(t_printf));
 	if (!format || !*format)
 		return (0);
 	va_start(ap, format);
-	head->len = ft_vasprintf(&head->ret, format, ap);
-	write(1, head->ret, head->len);
-	free(head->ret);
+	len = ft_vasprintf(&ret, format, ap);
+	write(1, ret, len);
+	free(ret);
 	va_end(ap);
-	free(head);
-	return (head->len);
+	return (len);
 }
 
 int		ft_vasprintf(char **ret, const char *format, va_list ap)
 {
-	t_printf *head;
-
-	head = NULL;
-	head = malloc(sizeof(t_printf));
-	head->format = format;
-	if (*head->format == '\0')
+	if (*format == '\0')
 		*ret = ft_strnew(0);
-	if (!ret || !head->format || !*head->format)
-	{
-		free(head);
+	if (!ret || !format || !*format)
 		return (0);
-	}
-	if (ft_strchr(head->format, '%') == NULL)
+	if (ft_strchr(format, '%') == NULL)
 	{
-		if ((*ret = ft_strdup(head->format)) == NULL)
-		{
-			free(head);
+		if ((*ret = ft_strdup(format)) == NULL)
 			return (-1);
-		}
-		free(head);
 		return (ft_strlen(*ret));
 	}
-	free(head);
-	return (ft_strprintf(ret, head->format, ap));
+	return (ft_strprintf(ret, format, ap));
 }
 
 int		ft_sprintf(char *str, const char *format, ...)
 {
 	va_list ap;
-	t_printf *head;
+	int		len;
+	char	*ret;
 
-	head = NULL;
 	if (!str || !format)
 		return (0);
 	va_start(ap, format);
-	head->len = ft_vasprintf(&head->ret, format, ap);
-	ft_strcpy(str, head->ret);
-	free(head->ret);
+	len = ft_vasprintf(&ret, format, ap);
+	ft_strcpy(str, ret);
+	free(ret);
 	va_end(ap);
-	free(head);
-	return (head->len);
+	return (len);
 }
 
 int		ft_snprintf(char *str, size_t size, const char *format, ...)
 {
 	va_list ap;
-	t_printf *head;
+	int		len;
+	char	*ret;
 
-	head = NULL;
-	head = malloc(sizeof(t_printf));
 	if (!str || !format)
 		return (0);
 	va_start(ap, format);
-	head->len = ft_vasprintf(&head->ret, format, ap);
+	len = ft_vasprintf(&ret, format, ap);
 	if (size == 0)
-		return (head->len);
+		return (len);
 	else if (size - 1 == 0)
 		str[0] = '\0';
-	ft_strncpy(str, head->ret, size - 1);
-	free(head->ret);
+	ft_strncpy(str, ret, size - 1);
+	free(ret);
 	va_end(ap);
-	free(head);
-	return (head->len);
+	return (len);
 }
 
 int		ft_dprintf(int fd, const char *format, ...)
 {
 	va_list ap;
-	t_printf *head;
+	int		len;
+	char	*ret;
 
-	head = NULL;
-	head = malloc(sizeof(t_printf));
 	if (!format || !*format || fd < 0)
 		return (0);
 	va_start(ap, format);
-	head->len = ft_vasprintf(&head->ret, format, ap);
-	write(fd, head->ret, head->len);
-	free(head->ret);
+	len = ft_vasprintf(&ret, format, ap);
+	write(fd, ret, len);
+	free(ret);
 	va_end(ap);
-	free(head);
-	return (head->len);
+	return (len);
 }
