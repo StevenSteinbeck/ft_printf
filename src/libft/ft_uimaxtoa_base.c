@@ -22,7 +22,7 @@ char	*ft_uimaxtoa_base(uintmax_t value, int8_t base, const char *str)
 	head.size = 1;
 	while ((head.i_val /= base))
 		head.size++;
-	head.retrn = (char *)ft_memalloc(sizeof(char) * (head.size + 1));
+	head.retrn = (char *)malloc(sizeof(char) * (head.size + 1));
 	head.retrn[head.size] = '\0';
 	head.i_val = value;
 	head.retrn[--head.size] = str[head.i_val % base];
