@@ -38,15 +38,19 @@ wchar_t	*ft_wstrdup(wchar_t *str)
 
 size_t	ft_wstrlen(wchar_t *str)
 {
-	t_wstr head;
+	t_wstr	head;
+	t_wstr	*top;
 
+	top = malloc(sizeof(t_wstr));
 	head.i_val = 0;
 	head.size = 0;
 	while (str[head.i_val])
 	{
+		top->size = ft_unicode_b(str[head.i_val]);
 		head.size += ft_unicode_b(str[head.i_val]);
 		head.i_val++;
 	}
+	free(top);
 	return (head.size);
 }
 
