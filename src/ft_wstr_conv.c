@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 14:16:51 by gguiulfo          #+#    #+#             */
-/*   Updated: 2018/06/03 11:12:37 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 11:22:56 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 wchar_t	*ft_wstrdup(wchar_t *str)
 {
-	t_wstr	*head;
+	t_wstr	head;
 
-	head = malloc(sizeof(t_wstr));
-	head->size = 0;
-	while (str[head->size])
-		++head->size;
-	head->duplicate = (wchar_t *)malloc(sizeof(wchar_t) * (head->size + 1));
-	if (!head->duplicate)
-	{
-		free(head);
+	head.size = 0;
+	while (str[head.size])
+		++head.size;
+	head.duplicate = (wchar_t *)malloc(sizeof(wchar_t) * (head.size + 1));
+	if (!head.duplicate)
 		return (NULL);
-	}
-	head->size = 0;
-	while (str[head->size])
+	head.size = 0;
+	while (str[head.size])
 	{
-		head->duplicate[head->size] = str[head->size];
-		head->size++;
+		head.duplicate[head.size] = str[head.size];
+		head.size++;
 	}
-	head->duplicate[head->size] = '\0';
-	return (head->duplicate);
+	head.duplicate[head.size] = '\0';
+	return (head.duplicate);
 }
 
 size_t	ft_wstrlen(wchar_t *str)
