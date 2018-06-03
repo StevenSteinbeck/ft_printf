@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:50:04 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 11:06:31 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 11:35:55 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef	struct	s_wstr
 {
 	wchar_t		*duplicate;
 	size_t		size;
-	size_t		iiiii;
+	size_t		i_val;
 	char		*value;
 }				t_wstr;
 
