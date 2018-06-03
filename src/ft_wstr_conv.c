@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 14:16:51 by gguiulfo          #+#    #+#             */
-/*   Updated: 2018/06/03 11:28:04 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 11:28:44 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ wchar_t	*ft_wstrdup(wchar_t *str)
 	t_wstr	head;
 	t_wstr	*alloc;
 
-	head = malloc(sizeof(t_wstr));
+	alloc = malloc(sizeof(t_wstr));
 	head.size = 0;
 	alloc->size = 0;
 	while (str[head.size])
