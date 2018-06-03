@@ -3,114 +3,104 @@
 /*                                                        :::      ::::::::   */
 /*   ft_wstr_conv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/30 19:01:30 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/30 19:26:18 by stestein         ###   ########.fr       */
+/*   Created: 2017/04/05 14:16:51 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/04/11 20:49:52 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <libftprintf.h>
 
 wchar_t	*ft_wstrdup(wchar_t *str)
 {
-	t_wstr	*head;
+	wchar_t	*dup;
+	size_t	size;
 
-	head = malloc(sizeof(t_wstr));
-	head->size = 0;
-	while (str[head->size])
-		++head->size;
-	head->dupl = (wchar_t *)malloc(sizeof(wchar_t) * (head->size + 1));
-	if (!head->dupl)
+	size = 0;
+	while (str[size])
+		++size;
+	dup = (wchar_t *)malloc(sizeof(wchar_t) * (size + 1));
+	if (!dup)
 		return (NULL);
-	head->size = 0;
-	while (str[head->size])
+	size = 0;
+	while (str[size])
 	{
-		head->dupl[head->size] = str[head->size];
-		head->size++;
+		dup[size] = str[size];
+		size++;
 	}
-	head->dupl[head->size] = '\0';
-	free(head);
-	return (head->dupl);
+	dup[size] = '\0';
+	return (dup);
 }
 
 size_t	ft_wstrlen(wchar_t *str)
 {
-	t_wstr	*head;
+	size_t count;
+	size_t i;
 
-	head = malloc(sizeof(t_wstr));
-	head->iii = 0;
-	head->size = 0;
-	while (str[head->iii])
+	i = 0;
+	count = 0;
+	while (str[i])
 	{
-		head->size += ft_unicode_b(str[head->iii]);
-		head->iii++;
+		count += ft_unicode_b(str[i]);
+		i++;
 	}
-	free(head);
-	return (head->size);
+	return (count);
 }
 
 void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 {
-	t_wstr	*head;
+	size_t count;
+	size_t i;
 
-	head = malloc(sizeof(t_wstr));
-	head->iii = 0;
-	head->size = 0;
+	i = 0;
+	count = 0;
 	if (pfinfo->prec == -1)
-	{
-		free(head);
 		return ;
-	}
 	if (ft_wstrlen(str) <= (size_t)pfinfo->prec)
-	{
-		free(head);
 		return ;
-	}
-	while (str[head->iii] && head->size <= (size_t)pfinfo->prec)
+	while (str[i] && count <= (size_t)pfinfo->prec)
 	{
-		head->size += ft_unicode_b(str[head->iii]);
-		head->iii++;
+		count += ft_unicode_b(str[i]);
+		i++;
 	}
-	str[head->iii - 1] = '\0';
-	free(head);
+	str[i - 1] = '\0';
 }
 
 char	*ft_wstr_to_str(wchar_t *wstr)
 {
-	t_wstr	*head;
+	char	*ret;
+	size_t	i;
+	size_t	pos;
 
-	head = malloc(sizeof(t_wstr));
-	head->iii = 0;
-	head->size = 0;
-	head->value = ft_strnew(ft_wstrlen(wstr));
-	while (wstr[head->iii])
+	i = 0;
+	pos = 0;
+	ret = ft_strnew(ft_wstrlen(wstr));
+	while (wstr[i])
 	{
-		ft_unicode_conv(wstr[head->iii], head->value + head->size);
-		head->size += ft_unicode_b(wstr[head->iii]);
-		head->iii++;
+		ft_unicode_conv(wstr[i], ret + pos);
+		pos += ft_unicode_b(wstr[i]);
+		i++;
 	}
-	free(head);
-	return (head->value);
+	return (ret);
 }
 
 void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	t_wstr	*head;
+	wchar_t *ctemp;
+	char	*str;
 
-	head = malloc(sizeof(t_wstr));
-	head->dupl = va_arg(ap, wchar_t *);
-	if (!head->dupl)
-		head->value = ft_null_str(pfinfo);
+	ctemp = va_arg(ap, wchar_t *);
+	if (!ctemp)
+		str = ft_null_str(pfinfo);
 	else
 	{
-		head->dupl = ft_wstrdup(head->dupl);
-		ft_prec_wstr(pfinfo, head->dupl);
-		head->value = ft_wstr_to_str(head->dupl);
-		free(head->dupl);
+		ctemp = ft_wstrdup(ctemp);
+		ft_prec_wstr(pfinfo, ctemp);
+		str = ft_wstr_to_str(ctemp);
+		free(ctemp);
 	}
-	ft_pad_handle(pfinfo, &head->value);
-	ft_vector_append(vector, head->value);
-	free(head->value);
-	free(head);
+	ft_pad_handle(pfinfo, &str);
+	ft_vector_append(vector, str);
+	free(str);
 }
