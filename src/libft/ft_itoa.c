@@ -1,62 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   austin_itoa.c                                      :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/30 12:43:35 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/11 12:33:43 by stestein         ###   ########.fr       */
+/*   Created: 2017/03/03 17:58:13 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/03/05 00:04:18 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	itoa_isnegative(int *n, int *negative)
+static long long	ft_nblen(long long nb)
 {
-	if (*n < 0)
+	int	i;
+
+	i = 0;
+	if (nb == 0)
+		return (1);
+	while (nb > 0)
 	{
-		*n *= -1;
-		*negative = 1;
+		nb /= 10;
+		i++;
 	}
+	return (i);
 }
 
-char	*ft_itoa(int n)
+char				*ft_itoa(int n)
 {
-	int		tmpn;
-	int		len;
-	int		negative;
-	char	*str;
+	char		*str;
+	int			len;
+	int			neg_f;
+	long long	num;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	tmpn = n;
-	len = 2;
-	negative = 0;
-	itoa_isnegative(&n, &negative);
-	while (tmpn /= 10)
-		len++;
-	len += negative;
-	if ((str = (char*)malloc(sizeof(char) * len)) == NULL)
-		return (NULL);
-	str[--len] = '\0';
-	while (len--)
+	neg_f = (n >= 0) ? 0 : 1;
+	num = n;
+	num = (neg_f) ? -num : num;
+	len = (neg_f) ? ft_nblen(num) + 1 : ft_nblen(num);
+	if ((str = ft_strnew(len)) == 0)
+		return (0);
+	if (num == 0)
 	{
-		str[len] = n % 10 + '0';
-		n = n / 10;
+		str[0] = '0';
+		return (str);
 	}
-	if (negative)
+	if (neg_f)
 		str[0] = '-';
+	str[len] = '\0';
+	while (len-- > neg_f)
+	{
+		str[len] = num % 10 + '0';
+		num /= 10;
+	}
 	return (str);
 }
-
-/*int		main()
-{
-	char *result = NULL;
-	int number = 123;
-	int neg_number = -1234567;
-	int i = 0;
-
-	result = ft_itoa(number);
-	return (0);
-}*/
