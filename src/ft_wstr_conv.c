@@ -98,20 +98,19 @@ char	*ft_wstr_to_str(wchar_t *wstr)
 
 void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	wchar_t *ctemp;
-	char	*str;
+	t_wstr	head;
 
-	ctemp = va_arg(ap, wchar_t *);
-	if (!ctemp)
-		str = ft_null_str(pfinfo);
+	head.duplicate = va_arg(ap, wchar_t *);
+	if (!head.duplicate	)
+		head.value = ft_null_str(pfinfo);
 	else
 	{
-		ctemp = ft_wstrdup(ctemp);
-		ft_prec_wstr(pfinfo, ctemp);
-		str = ft_wstr_to_str(ctemp);
-		free(ctemp);
+		ctemp = ft_wstrdup(head.duplicate);
+		ft_prec_wstr(pfinfo, head.duplicate);
+		head.value = ft_wstr_to_str(head.duplicate);
+		free(head.duplicate);
 	}
-	ft_pad_handle(pfinfo, &str);
-	ft_vector_append(vector, str);
-	free(str);
+	ft_pad_handle(pfinfo, &head.value);
+	ft_vector_append(vector, head.value);
+	free(head.value);
 }
