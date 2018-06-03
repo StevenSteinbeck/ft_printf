@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fmt_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/31 22:48:30 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/11 21:29:00 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
+/*   Updated: 2018/06/03 12:16:18 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+#include "libftprintf.h"
 
 t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 {
 	const char	flags[] = "-+ 0#";
-	size_t		i;
+	t_fmt head;
 
-	i = 0;
-	while (flags[i] != **format && flags[i])
-		i++;
-	if (flags[i])
+	head.str = flags;
+	head.i = 0;
+	while (head.str[head.i] != **format && head.str[head.i])
+		head.i++;
+	if (head.str[head.i])
 	{
-		pfinfo->flags = pfinfo->flags | (1 << i);
+		pfinfo->flags = pfinfo->flags | (1 << head.i);
 		(*format)++;
 		return (true);
 	}
@@ -31,9 +32,9 @@ t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 
 t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 {
-	int res;
+	t_fmt head;
 
-	res = 0;
+	head.res = 0;
 	if (**format == '*')
 	{
 		pfinfo->width = va_arg(ap, int);
@@ -50,18 +51,18 @@ t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 		return (false);
 	while (ISDIGIT(**format))
 	{
-		res = res * 10 + (**format - '0');
+		head.res = head.res * 10 + (**format - '0');
 		(*format)++;
 	}
-	pfinfo->width = res;
+	pfinfo->width = head.res;
 	return (true);
 }
 
 t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 {
-	int res;
+	t_fmt head;
 
-	res = 0;
+	head.res = 0;
 	if (**format != '.')
 		return (false);
 	pfinfo->pset = 1;
@@ -76,32 +77,33 @@ t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 	}
 	while (ISDIGIT(**format))
 	{
-		res = res * 10 + (**format - '0');
+		head.res = head.res * 10 + (**format - '0');
 		(*format)++;
 	}
-	pfinfo->prec = res;
+	pfinfo->prec = head.res;
 	return (true);
 }
 
 t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
 	const char	lengths[] = "hhlljz";
-	int			i;
+	t_fmt head;
 
-	i = 0;
+	head.str = lengths;
+	head.res = 0;
 	if (ISLENMOD(**format))
 	{
-		i = ft_findchr(lengths, **format);
-		if (i == 0)
+		head.res = ft_findchr(head.str, **format);
+		if (head.res == 0)
 		{
 			if (*(*format + 1) == 'h')
 				++*format;
 			else
-				i = 1;
+				head.res = 1;
 		}
-		if (i == 2)
-			i = (*(*format + 1) == 'l') ? 3 : 2;
-		pfinfo->length = MAX(i, pfinfo->length);
+		if (head.res == 2)
+			head.res = (*(*format + 1) == 'l') ? 3 : 2;
+		pfinfo->length = MAX(head.res, pfinfo->length);
 		++*format;
 		return (true);
 	}
