@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_recalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 15:40:33 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/31 14:21:51 by stestein         ###   ########.fr       */
+/*   Created: 2017/04/06 16:36:26 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/04/06 16:37:38 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 void	*ft_recalloc(void *ptr, size_t src_size, size_t new_size)
 {
 	void *new_ptr;
-	void *check;
 
-	check = NULL;
 	if (!new_size)
 	{
-		if (ptr && ptr != check)
+		if (ptr)
 			free(ptr);
 		return (ptr);
 	}
-	if (!ptr && ptr != check)
+	if (!ptr)
 		return (ft_memalloc(new_size));
-	if (new_size <= src_size && ptr != check)
+	if (new_size <= src_size)
 		return (ptr);
 	new_ptr = ft_memalloc(new_size);
-	if (new_ptr && ptr != check)
+	if (new_ptr)
 	{
 		ft_memcpy(new_ptr, ptr, src_size);
 		free(ptr);
