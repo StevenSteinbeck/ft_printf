@@ -3,42 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fmt_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/29 17:57:32 by stestein         ###   ########.fr       */
+/*   Created: 2017/03/31 22:48:30 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/04/11 21:29:00 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <libftprintf.h>
 
 t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 {
 	const char	flags[] = "-+ 0#";
-	t_fmt *head;
+	size_t		i;
 
-	head = malloc(sizeof(t_fmt));
-	head->str = flags;
-	head->i = 0;
-	while (head->str[head->i] != **format && head->str[head->i])
-		head->i++;
-	if (head->str[head->i])
+	i = 0;
+	while (flags[i] != **format && flags[i])
+		i++;
+	if (flags[i])
 	{
-		pfinfo->flags = pfinfo->flags | (1 << head->i);
+		pfinfo->flags = pfinfo->flags | (1 << i);
 		(*format)++;
-		free(head);
 		return (true);
 	}
-	free(head);
 	return (false);
 }
 
 t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 {
-	t_fmt *head;
+	int res;
 
-	head = malloc(sizeof(t_fmt));
-	head->res = 0;
+	res = 0;
 	if (**format == '*')
 	{
 		pfinfo->width = va_arg(ap, int);
@@ -49,35 +44,26 @@ t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 			pfinfo->width = pfinfo->width * -1;
 		}
 		(*format)++;
-		free(head);
 		return (true);
 	}
 	if (!ISDIGIT(**format))
-	{
-		free(head);
 		return (false);
-	}
 	while (ISDIGIT(**format))
 	{
-		head->res = head->res * 10 + (**format - '0');
+		res = res * 10 + (**format - '0');
 		(*format)++;
 	}
-	pfinfo->width = head->res;
-	free(head);
+	pfinfo->width = res;
 	return (true);
 }
 
 t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 {
-	t_fmt *head;
+	int res;
 
-	head = malloc(sizeof(t_fmt));
-	head->res = 0;
+	res = 0;
 	if (**format != '.')
-	{
-		free(head);
 		return (false);
-	}
 	pfinfo->pset = 1;
 	(*format)++;
 	if (**format == '*')
@@ -86,44 +72,38 @@ t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 		if (pfinfo->prec < -1)
 			pfinfo->prec = -1;
 		(*format)++;
-		free(head);
 		return (true);
 	}
 	while (ISDIGIT(**format))
 	{
-		head->res = head->res * 10 + (**format - '0');
+		res = res * 10 + (**format - '0');
 		(*format)++;
 	}
-	pfinfo->prec = head->res;
-	free(head);
+	pfinfo->prec = res;
 	return (true);
 }
 
 t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
 	const char	lengths[] = "hhlljz";
-	t_fmt *head;
+	int			i;
 
-	head = malloc(sizeof(t_fmt));
-	head->str = lengths;
-	head->res = 0;
+	i = 0;
 	if (ISLENMOD(**format))
 	{
-		head->res = ft_findchr(head->str, **format);
-		if (head->res == 0)
+		i = ft_findchr(lengths, **format);
+		if (i == 0)
 		{
 			if (*(*format + 1) == 'h')
 				++*format;
 			else
-				head->res = 1;
+				i = 1;
 		}
-		if (head->res == 2)
-			head->res = (*(*format + 1) == 'l') ? 3 : 2;
-		pfinfo->length = MAX(head->res, pfinfo->length);
+		if (i == 2)
+			i = (*(*format + 1) == 'l') ? 3 : 2;
+		pfinfo->length = MAX(i, pfinfo->length);
 		++*format;
-		free(head);
 		return (true);
 	}
-	free(head);
 	return (false);
 }

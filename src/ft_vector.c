@@ -3,26 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vector.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/30 18:40:18 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/30 19:01:16 by stestein         ###   ########.fr       */
+/*   Created: 2017/03/31 23:35:03 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/04/12 20:20:42 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include <libftprintf.h>
 
 int		ft_vector_init(t_vector *vector, size_t init_cap)
 {
-	t_vect *head;
-
 	if (!vector || !init_cap)
 		return (FAILED);
-	head = malloc(sizeof(t_vect));
-	head->init = init_cap;
 	vector->len = 0;
-	vector->cap = head->init;
-	free(head);
+	vector->cap = init_cap;
 	if ((vector->data = ft_memalloc(sizeof(char) * vector->cap)) == NULL)
 		return (FAILED);
 	return (SUCCESS);
@@ -30,55 +25,44 @@ int		ft_vector_init(t_vector *vector, size_t init_cap)
 
 void	ft_vector_append(t_vector *vector, char *newdata)
 {
-	t_vect	*head;
+	size_t nd_len;
 
-	head = malloc(sizeof(t_vect));
-	head->size = ft_strlen(newdata);
-	if (vector->cap < vector->len + head->size)
-		ft_vector_resize(vector, vector->len + head->size);
-	ft_memcpy(vector->data + vector->len, newdata, head->size);
-	vector->len += head->size;
-	free(head);
+	nd_len = ft_strlen(newdata);
+	if (vector->cap < vector->len + nd_len)
+		ft_vector_resize(vector, vector->len + nd_len);
+	ft_memcpy(vector->data + vector->len, newdata, nd_len);
+	vector->len += nd_len;
 }
 
 void	ft_vector_resize(t_vector *vector, size_t min)
 {
-	t_vect	*head;
+	size_t	mllc_size;
 
-	head = malloc(sizeof(t_vect));
 	if (!(vector->data))
 		ft_vector_init(vector, min);
-	head->size = vector->cap;
-	while (head->size < min)
-		head->size *= 2;
-	vector->data = (char *)ft_recalloc(vector->data, vector->len, head->size);
-	vector->cap = head->size;
-	free(head);
+	mllc_size = vector->cap;
+	while (mllc_size < min)
+		mllc_size *= 2;
+	vector->data = (char *)ft_recalloc(vector->data, vector->len, mllc_size);
+	vector->cap = mllc_size;
 }
 
 void	ft_vector_nappend(t_vector *vector, char *newdata, size_t n)
 {
-	t_vect	*head;
+	size_t nd_len;
 
-	head = malloc(sizeof(t_vect));
-	head->size = n;
-	if (vector->cap < vector->len + head->size)
-		ft_vector_resize(vector, vector->len + head->size);
-	ft_memcpy(vector->data + vector->len, newdata, head->size);
-	vector->len += head->size;
-	free(head);
+	nd_len = n;
+	if (vector->cap < vector->len + nd_len)
+		ft_vector_resize(vector, vector->len + nd_len);
+	ft_memcpy(vector->data + vector->len, newdata, nd_len);
+	vector->len += nd_len;
 }
 
 void	ft_vector_free(t_vector *vector)
 {
-	t_vect	*head;
-
-	head = malloc(sizeof(t_vect));
-	head->string = vector->data;
-	if (head->string && vector->cap > 0)
+	if (vector->data && vector->cap > 0)
 	{
-		free(head->string);
-		head->string = NULL;
+		free(vector->data);
+		vector->data = NULL;
 	}
-	free(head);
 }
