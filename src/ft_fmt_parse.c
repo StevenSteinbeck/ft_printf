@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 12:16:18 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 14:48:52 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,21 @@
 t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 {
 	const char	flags[] = "-+ 0#";
-	t_fmt head;
+	t_fmt *head;
 
-	head.str = flags;
-	head.i = 0;
-	while (head.str[head.i] != **format && head.str[head.i])
-		head.i++;
-	if (head.str[head.i])
+	head = malloc(sizeof(t_fmt));
+	head->str = flags;
+	head->i = 0;
+	while (head->str[head->i] != **format && head->str[head->i])
+		head->i++;
+	if (head->str[head->i])
 	{
-		pfinfo->flags = pfinfo->flags | (1 << head.i);
+		pfinfo->flags = pfinfo->flags | (1 << head->i);
 		(*format)++;
+		free(head);
 		return (true);
 	}
+	free(head);
 	return (false);
 }
 
