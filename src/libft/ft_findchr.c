@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_findchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/21 22:01:36 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/10 17:18:26 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 15:37:53 by stestein          #+#    #+#             */
+/*   Updated: 2018/05/31 13:48:52 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 size_t		ft_findchr(const char *s, int c)
 {
-	int				i;
-	unsigned char	a;
+	t_libft	*head;
 
-	a = (unsigned char)c;
-	i = 0;
-	while (s[i] != '\0')
+	head = malloc(sizeof(t_libft));
+	head->a = (unsigned char)c;
+	head->i = 0;
+	free(head);
+	while (s[head->i] != '\0')
 	{
-		if (s[i] == a)
-			return (i);
-		i++;
+		if (s[head->i] == head->a)
+			return (head->i);
+		head->i++;
 	}
-	if (s[i] == a)
+	if (s[head->i] == head->a)
 		return (ft_strlen(s) + 1);
 	return (0);
 }
