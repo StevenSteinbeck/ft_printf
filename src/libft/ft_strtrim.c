@@ -3,60 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/26 15:58:14 by stestein          #+#    #+#             */
-/*   Updated: 2018/03/13 10:42:19 by stestein         ###   ########.fr       */
+/*   Created: 2017/03/03 16:58:06 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/03/05 17:21:14 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		length_count(const char *str)
+char	*ft_strtrim(char const *s)
 {
-	int		length;
-	int		i;
+	char	*str;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	length = 0;
-	while (str[length])
-		length++;
-	length--;
-	while (str[length] == ' ' || str[length] == '\t' || str[length] == '\n')
-		length--;
-	if (length == 0)
+	j = 0;
+	if (!s || (str = (char *)malloc(sizeof(char))) == 0)
 		return (0);
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+	if (*s == '\0' || !s)
+		return (str);
+	while (*s && (*s == ' ' || *s == '\t' || *s == '\n'))
+		s++;
+	while (s[i])
+		i++;
+	while ((s[i - 1] == ' ' || s[i - 1] == '\t' || s[i - 1] == '\n') && i)
+		i--;
+	if ((str = ft_strnew(i)) == 0)
+		return (0);
+	while (j < i)
 	{
-		i++;
-		length--;
+		str[j] = s[j];
+		j++;
 	}
-	return (length);
-}
-
-char			*ft_strtrim(char const *s)
-{
-	int		length;
-
-	TRIM;
-	if (s == NULL)
-		return (NULL);
-	length = length_count(s);
-	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
-		i++;
-	if (s[i] == '\0')
-		return (ft_strcpy(ft_memalloc(sizeof(char) * 2), ""));
-	str = (char *)malloc(sizeof(*str) * (length + 2));
-	if (str == NULL)
-		return (NULL);
-	n = 0;
-	while (length + 1 > 0)
-	{
-		str[n] = s[i];
-		length--;
-		n++;
-		i++;
-	}
-	str[n] = '\0';
 	return (str);
 }

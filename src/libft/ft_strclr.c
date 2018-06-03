@@ -3,25 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/24 10:59:15 by stestein          #+#    #+#             */
-/*   Updated: 2018/03/13 10:23:55 by stestein         ###   ########.fr       */
+/*   Created: 2017/03/03 15:53:22 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/03/05 17:07:18 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
 void	ft_strclr(char *s)
 {
-	int i;
-
-	i = 0;
-	if (s == NULL)
+	if (!s)
 		return ;
-	while (s[i])
-	{
-		s[i] = '\0';
-		i++;
-	}
+	while (*s)
+		*s++ = '\0';
 }

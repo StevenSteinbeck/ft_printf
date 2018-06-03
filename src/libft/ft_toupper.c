@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_to_upper.c                                      :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/20 11:22:38 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/29 15:41:13 by stestein         ###   ########.fr       */
+/*   Created: 2017/02/28 15:47:16 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/02/28 15:53:43 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int		ft_toupper(int x)
+int		ft_toupper(int c)
 {
-	if (x >= 97 && x <= 122)
-		return (x - 32);
-	else
-		return (x);
+	return (((unsigned)c - 97) < 26u ? c - 32 : c);
 }

@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_free_rows.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 11:11:41 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/03/01 11:51:17 by gguiulfo         ###   ########.fr       */
+/*   Created: 2017/03/12 18:58:11 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/03/12 18:59:08 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+void	ft_free_rows(void **d_arr, int rows)
 {
-	size_t i;
-
-	i = 0;
-	while (s1[i] || s2[i])
+	while (--rows > -1)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		free(d_arr[rows]);
 	}
-	return (0);
+	free(d_arr);
 }

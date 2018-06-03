@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_free_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 11:11:41 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/03/01 11:51:17 by gguiulfo         ###   ########.fr       */
+/*   Created: 2017/03/12 18:59:54 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/03/12 19:00:55 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+void	ft_free_map(char **map)
 {
 	size_t i;
 
 	i = 0;
-	while (s1[i] || s2[i])
+	while (map[i])
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		free(map[i]);
 		i++;
 	}
-	return (0);
+	free(map);
 }

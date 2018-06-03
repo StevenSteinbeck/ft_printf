@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 15:40:24 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/31 14:19:08 by stestein         ###   ########.fr       */
+/*   Created: 2017/04/06 16:38:07 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/04/06 16:38:53 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void	*ft_realloc(void *ptr, size_t src_size, size_t new_size)
 {
 	void *new_ptr;
-	void *ptr_check;
 
-	ptr_check = ptr;
-	if (ptr_check != ptr)
-		return (NULL);
 	if (!new_size)
 	{
 		if (ptr)

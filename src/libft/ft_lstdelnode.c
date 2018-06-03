@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelnode.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 11:11:41 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/03/01 11:51:17 by gguiulfo         ###   ########.fr       */
+/*   Created: 2017/03/23 15:15:38 by gguiulfo          #+#    #+#             */
+/*   Updated: 2017/03/23 17:20:20 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+void	ft_lstdelnode(t_list **head, t_list *node)
 {
-	size_t i;
+	t_list *temp;
 
-	i = 0;
-	while (s1[i] || s2[i])
+	if (!node)
+		return ;
+	if (*head == node)
+		*head = (*head)->next;
+	else
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		temp = *head;
+		while (temp->next != 0 && temp->next != node)
+			temp = temp->next;
+		if (temp->next == 0)
+			return ;
+		temp->next = temp->next->next;
 	}
-	return (0);
+	free(node->content);
+	free(node);
 }
