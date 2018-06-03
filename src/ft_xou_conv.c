@@ -3,59 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   ft_xou_conv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/06 14:53:29 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/13 12:12:38 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/30 19:26:48 by stestein          #+#    #+#             */
+/*   Updated: 2018/06/03 12:39:29 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+#include "libftprintf.h"
+
+# define FLAG_HH return ((unsigned char)va_arg(ap, int));
+# define FLAG_H return ((unsigned short)va_arg(ap, int));
+# define FLAG_L return (va_arg(ap, unsigned long));
+# define FLAG_LL return (va_arg(ap, unsigned long long));
+# define FLAG_J return (va_arg(ap, uintmax_t));
+# define FLAG_Z return (va_arg(ap, size_t));
 
 uintmax_t	ft_xou_len(char length, va_list ap)
 {
 	if (length == hh)
-		return ((unsigned char)va_arg(ap, int));
+		FLAG_HH;
 	if (length == h)
-		return ((unsigned short)va_arg(ap, int));
+		FLAG_H;
 	if (length == l)
-		return (va_arg(ap, unsigned long));
+		FLAG_L;
 	if (length == ll)
-		return (va_arg(ap, unsigned long long));
+		FLAG_LL;
 	if (length == j)
-		return (va_arg(ap, uintmax_t));
+		FLAG_J;
 	if (length == z)
-		return (va_arg(ap, size_t));
+		FLAG_Z;
 	return (va_arg(ap, unsigned int));
 }
 
 void		ft_handle_alt(t_info *pfinfo, char **str)
 {
-	char *new;
+	t_printf	head;
 
 	if (!(ISXO(pfinfo->spec) || pfinfo->spec == 'p' || pfinfo->spec == 'b'))
 		return ;
-	new = ft_strdup(*str);
+	head.ret = ft_strdup(*str);
 	if (pfinfo->spec == 'p')
-		ft_insrt_to_str(&new, "0x");
+		ft_insrt_to_str(&head.ret, "0x");
 	else if (pfinfo->flags & HTG)
 	{
 		if (pfinfo->spec == 'b' && ft_strcmp("0", *str) &&
 														ft_strcmp("\0", *str))
-			ft_insrt_to_str(&new, "0b");
+			ft_insrt_to_str(&head.ret, "0b");
 		else if (IS_X(pfinfo->spec) && ft_strcmp("0", *str) &&
 														ft_strcmp("\0", *str))
-			ft_insrt_to_str(&new, "0x");
+			ft_insrt_to_str(&head.ret, "0x");
 		else if (IS_O(pfinfo->spec) && **str != '0')
-			ft_insrt_to_str(&new, "0");
+			ft_insrt_to_str(&head.ret, "0");
 	}
 	free(*str);
-	*str = new;
+	*str = head.ret;
 }
 
 void		ft_x_toupper(char *str, char spec)
 {
-	if (spec != 'X')
+	t_xou	head;
+
+	head.size = spec;
+	if (head.size != 'X')
 		return ;
 	while (*str)
 	{
@@ -67,25 +77,28 @@ void		ft_x_toupper(char *str, char spec)
 
 void		ft_handle_xou(char **str, t_info *pfinfo)
 {
+	t_xou	head;
+
+	head.string = str;
 	if (pfinfo->flags & ZER && pfinfo->prec == 0)
 		pfinfo->flags ^= ZER;
-	if (pfinfo->prec == 0 && !ft_strcmp(*str, "0"))
-		**str = '\0';
-	ft_prec_nums(pfinfo, str);
+	if (pfinfo->prec == 0 && !ft_strcmp(*head.string, "0"))
+		**head.string = '\0';
+	ft_prec_nums(pfinfo, head.string);
 	if (pfinfo->flags & ZER && pfinfo->spec == 'p')
 	{
 		pfinfo->width = MAX(pfinfo->width - 2, 0);
-		ft_pad_handle(pfinfo, str);
+		ft_pad_handle(pfinfo, head.string);
 	}
 	else if (pfinfo->flags & ZER && pfinfo->flags & HTG && (IS_X(pfinfo->spec)
 														|| pfinfo->spec == 'b'))
 	{
 		pfinfo->width = MAX(pfinfo->width - 2, 0);
-		ft_pad_handle(pfinfo, str);
+		ft_pad_handle(pfinfo, head.string);
 	}
-	ft_handle_alt(pfinfo, str);
+	ft_handle_alt(pfinfo, head.string);
 	if (!(pfinfo->flags & ZER && pfinfo->flags & HTG && (IS_X(pfinfo->spec)
 								|| pfinfo->spec == 'p' || pfinfo->spec == 'b')))
-		ft_pad_handle(pfinfo, str);
-	ft_x_toupper(*str, pfinfo->spec);
+		ft_pad_handle(pfinfo, head.string);
+	ft_x_toupper(*head.string, pfinfo->spec);
 }
