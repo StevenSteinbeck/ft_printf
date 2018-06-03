@@ -3,49 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_conv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/03 17:33:03 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/10 18:07:12 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/30 18:28:38 by stestein          #+#    #+#             */
+/*   Updated: 2018/05/30 18:38:40 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+#include "libftprintf.h"
 
 char	*ft_null_str(t_info *pfinfo)
 {
-	char *temp;
+	t_str *head;
 
+	head = malloc(sizeof(t_str));
 	if (pfinfo->prec >= 1 || pfinfo->prec == -1)
 	{
-		temp = ft_strdup("(null)");
+		head->tmp = ft_strdup("(null)");
 		if (pfinfo->prec > 6)
-			temp[6] = '\0';
+			head->tmp[6] = '\0';
 		else
-			temp[(pfinfo->prec == -1) ? 6 : pfinfo->prec] = '\0';
+			head->tmp[(pfinfo->prec == -1) ? 6 : pfinfo->prec] = '\0';
 	}
 	else
-		temp = ft_strdup("");
-	return (temp);
+		head->tmp = ft_strdup("");
+	free(head);
+	return (head->tmp);
 }
 
 void	ft_str_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	char *ctemp;
-	char *str;
+	t_str *head;
 
+	head = malloc(sizeof(t_str));
 	if (pfinfo->length == l)
 	{
 		ft_wstr_conv(vector, pfinfo, ap);
+		free(head);
 		return ;
 	}
-	ctemp = va_arg(ap, char *);
-	if (!ctemp)
-		str = ft_null_str(pfinfo);
+	head->ctmp = va_arg(ap, char *);
+	if (!head->ctmp)
+		head->s = ft_null_str(pfinfo);
 	else
-		str = ft_strdup(ctemp);
-	ft_prec_handle(pfinfo, &str);
-	ft_pad_handle(pfinfo, &str);
-	ft_vector_append(vector, str);
-	free(str);
+		head->s = ft_strdup(head->ctmp);
+	ft_prec_handle(pfinfo, &head->s);
+	ft_pad_handle(pfinfo, &head->s);
+	ft_vector_append(vector, head->s);
+	free(head->s);
+	free(head);
 }

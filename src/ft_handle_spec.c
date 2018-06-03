@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_spec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/31 23:28:43 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/13 14:30:46 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 17:58:12 by stestein          #+#    #+#             */
+/*   Updated: 2018/05/29 18:09:41 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+#include "libftprintf.h"
 
 t_convtbl g_convtbl[] =
 {
@@ -36,60 +36,75 @@ t_convtbl g_convtbl[] =
 
 void	ft_get_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	int i;
+	t_spec *head;
 
-	i = -1;
-	while (++i < TOTAL_SPECS)
+	head = malloc(sizeof(t_spec));
+	head->i = -1;
+	while (++head->i < TOTAL_SPECS)
 	{
-		if (pfinfo->spec == g_convtbl[i].spec)
+		if (pfinfo->spec == g_convtbl[head->i].spec)
 		{
-			g_convtbl[i].f(vector, pfinfo, ap);
+			g_convtbl[head->i].f(vector, pfinfo, ap);
+			free(head);
 			return ;
 		}
 	}
+	free(head);
 	ft_pct_conv(vector, pfinfo, ap);
 }
 
 void	ft_handle_spec(t_vector *vector, const char **format,
 													t_info *pfinfo, va_list ap)
 {
-	if (**format == '{')
-		if (ft_pfcolors(vector, format) == true)
+	t_spec *head;
+
+	head = malloc(sizeof(t_spec));
+	head->format = format;
+	if (**head->format == '{')
+		if (ft_pfcolors(vector, head->format) == true)
+		{
+			free(head);
 			return ;
+		}
 	while (1)
 	{
-		if (ft_chk_flags(format, pfinfo))
+		if (ft_chk_flags(head->format, pfinfo))
 			continue ;
-		if (ft_chk_width(format, pfinfo, ap))
+		if (ft_chk_width(head->format, pfinfo, ap))
 			continue ;
-		if (ft_chk_prec(format, pfinfo, ap))
+		if (ft_chk_prec(head->format, pfinfo, ap))
 			continue ;
-		if (ft_chk_len(format, pfinfo))
+		if (ft_chk_len(head->format, pfinfo))
 			continue ;
-		if (**format == '\0')
+		if (**head->format == '\0')
+		{
+			free(head);
 			return ;
-		pfinfo->spec = *(*format)++;
+		}
+		pfinfo->spec = *(*head->format)++;
 		break ;
 	}
+	free(head);
 	ft_get_conv(vector, pfinfo, ap);
 }
 
 int		ft_strprintf(char **ret, const char *format, va_list ap)
 {
-	size_t		i;
+	t_spec *head;
 	t_vector	vector;
 	t_info		pfinfo;
 
 	ft_pfinfo_init(&pfinfo);
 	if (ft_vector_init(&vector, ft_strlen(format) + 50) == FAILED)
 		return (FAILED);
+	head = malloc(sizeof(t_spec));
 	while (*format)
 	{
-		i = 0;
-		while (format[i] && format[i] != '%')
-			i++;
-		ft_vector_nappend(&vector, (char *)format, i);
-		format += i;
+		head->i = 0;
+		while (format[head->i] && format[head->i] != '%')
+			head->i++;
+		ft_vector_nappend(&vector, (char *)format, head->i);
+		format += head->i;
 		if (*format == '%')
 		{
 			if (*(++format) == 0)
@@ -100,6 +115,7 @@ int		ft_strprintf(char **ret, const char *format, va_list ap)
 	}
 	*ret = ft_strndup(vector.data, vector.len);
 	ft_vector_free(&vector);
+	free(head);
 	return (vector.len);
 }
 
@@ -115,12 +131,14 @@ void	ft_pfinfo_init(t_info *pfinfo)
 
 void	ft_pct_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	char *str;
+	t_spec *head;
 
+	head = malloc(sizeof(t_spec));
 	(void)ap;
-	str = ft_strnew(1);
-	*str = pfinfo->spec;
-	ft_pad_handle(pfinfo, &str);
-	ft_vector_append(vector, str);
-	free(str);
+	head->str = ft_strnew(1);
+	*head->str = pfinfo->spec;
+	ft_pad_handle(pfinfo, &head->str);
+	ft_vector_append(vector, head->str);
+	free(head->str);
+	free(head);
 }
