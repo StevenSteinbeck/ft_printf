@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:09:09 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 14:43:59 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 14:46:07 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_unicode_conv(wchar_t chr, char *str)
 
 	head.chr = chr;
 	head.str = str;
-	if (head.chr < (MB_CUR_MAX == 1 ? 0xFF : 0x7F) && i == 0;)
+	if (head.chr < (MB_CUR_MAX == 1 ? 0xFF : 0x7F) && i == 0)
 				head.str[0] = (unsigned char)head.chr;
 	else if (head.chr < (1 << 11) && i == 0 || i > 5)
 	{
@@ -45,8 +45,9 @@ void	ft_unicode_conv(wchar_t chr, char *str)
 int		ft_unicode_b(wchar_t chr)
 {
 	t_chr	head;
-	t_libft	top;
+	t_libft	*top;
 
+	top = malloc(sizeof(t_libft));
 	top->i = 9;
 	head.chr = chr;
 	if (head.chr < (1 << 7) && top->i == 9)
@@ -97,7 +98,7 @@ void	ft_chr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	if (pfinfo->spec == 'C' || pfinfo->length == l)
 	{
 		if (i != 7)
-			break ;
+			str[0] =  "-";
 		head.null = ft_handle_wchar(&str, ap);
 		if (head.null && i == 7)
 			str[0] = head.null;
