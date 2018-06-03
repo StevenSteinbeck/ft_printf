@@ -57,9 +57,9 @@ size_t	ft_wstrlen(wchar_t *str)
 void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 {
 	t_wstr	head;
-	size_t count;
-	size_t i;
+	t_wstr	*top;
 
+	top = malloc(sizeof(t_wstr));
 	head.i_val = 0;
 	head.size = 0;
 	if (pfinfo->prec == -1)
@@ -68,9 +68,11 @@ void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 		return ;
 	while (str[head.i_val] && head.size <= (size_t)pfinfo->prec)
 	{
+		head->top = ft_unicode_b(str[head.i_val]);
 		head.size += ft_unicode_b(str[head.i_val]);
 		head.i_val++;
 	}
+	free(top);
 	str[head.i_val - 1] = '\0';
 }
 
