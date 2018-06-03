@@ -105,7 +105,7 @@ void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 		head.value = ft_null_str(pfinfo);
 	else
 	{
-		ctemp = ft_wstrdup(head.duplicate);
+		head.duplicate = ft_wstrdup(head.duplicate);
 		ft_prec_wstr(pfinfo, head.duplicate);
 		head.value = ft_wstr_to_str(head.duplicate);
 		free(head.duplicate);
