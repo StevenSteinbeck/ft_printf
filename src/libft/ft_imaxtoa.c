@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_imaxtoa.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/03 20:34:09 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/06 16:41:52 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 15:38:27 by stestein          #+#    #+#             */
+/*   Updated: 2018/05/31 13:57:02 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_imaxtoa(intmax_t value)
 {
-	uintmax_t	i;
-	intmax_t	size;
-	char		*ret;
+	t_libft		*head;
 
-	i = (value < 0) ? -value : value;
-	size = 1 + (value < 0);
-	while ((i /= 10))
-		size++;
-	ret = (char *)malloc(sizeof(char) * (size + 1));
-	ret[size] = '\0';
-	i = (value < 0) ? -value : value;
-	ret[--size] = "0123456789"[i % 10];
-	while ((i /= 10))
-		ret[--size] = "0123456789"[i % 10];
+	head = malloc(sizeof(t_libft));
+	head->intmx = (value < 0) ? -value : value;
+	head->size = 1 + (value < 0);
+	while ((head->intmx /= 10))
+		head->size++;
+	head->ret = (char *)malloc(sizeof(char) * (head->size + 1));
+	head->ret[head->size] = '\0';
+	head->intmx = (value < 0) ? -value : value;
+	head->ret[--head->size] = "0123456789"[head->intmx % 10];
+	while ((head->intmx /= 10))
+		head->ret[--head->size] = "0123456789"[head->intmx % 10];
 	if (value < 0)
-		ret[--size] = '-';
-	return (ret);
+		head->ret[--head->size] = '-';
+	free(head);
+	return (head->ret);
 }

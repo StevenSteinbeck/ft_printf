@@ -3,35 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 11:09:49 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/02/27 18:31:49 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/02/20 16:45:47 by stestein          #+#    #+#             */
+/*   Updated: 2018/03/13 10:39:13 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strstr(const char *big, const char *little)
+#include "libft.h"
+
+char	*ft_strstr(const char *str, const char *to_find)
 {
-	int i;
-	int j;
-	int size;
+	unsigned int i;
+	unsigned int j;
 
 	i = 0;
 	j = 0;
-	size = 0;
-	while (little[size] != '\0')
-		size++;
-	if (size == 0)
-		return ((char *)big);
-	while (big[i] != '\0')
+	if (str[i] == to_find[i] && str[i] == '\0')
+		return ((char *)&str[i]);
+	while (str[i])
 	{
-		while (big[i + j] == little[j])
-		{
-			if (j == size - 1)
-				return ((char *)(big + i));
+		j = i;
+		while (str[j] == to_find[j - i] && str[j])
 			j++;
-		}
-		j = 0;
+		if (to_find[j - i] == '\0')
+			return ((char *)&str[i]);
 		i++;
 	}
 	return (0);

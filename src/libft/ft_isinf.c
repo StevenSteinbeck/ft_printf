@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isinf.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/09 17:05:42 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/09 17:10:08 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 15:42:47 by stestein          #+#    #+#             */
+/*   Updated: 2018/05/31 14:07:19 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int		ft_isinf(double num)
 {
+	double num2;
+
+	num2 = num;
+	if (num2 != num)
+		return(ft_isnan(num));
 	return (num == (1.0 / 0.0) || num == (-1.0 / 0.0));
 }

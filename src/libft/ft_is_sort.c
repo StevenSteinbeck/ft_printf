@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_is_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/05 18:43:25 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/03/06 13:14:50 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 15:39:07 by stestein          #+#    #+#             */
+/*   Updated: 2018/05/31 14:03:15 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int		ft_is_sort(int *tab, int length, int (*f)(int, int))
 {
-	int i;
-
-	i = 0;
+	t_libft	*head;
+	
+	head = malloc(sizeof(t_libft));
+	head->i = 0;
+	free(head);
 	if (length == 0 || length == 1)
 		return (1);
-	while (i < length - 1)
+	while (head->i < length - 1)
 	{
-		if (f(tab[i], tab[i + 1]) <= 0)
-			i++;
+		if (f(tab[head->i], tab[head->i + 1]) <= 0)
+			head->i++;
 		else
 			break ;
 	}
-	if (i == length - 1)
+	if (head->i == length - 1)
 		return (1);
 	return (0);
 }
