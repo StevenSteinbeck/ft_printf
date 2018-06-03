@@ -3,99 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   ft_num_conv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/31 19:05:31 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/04/13 14:50:36 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
+/*   Updated: 2018/06/03 12:21:45 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libftprintf.h>
+#include "libftprintf.h"
+
+# define FLAG_HH return ((signed char)va_arg(ap, int));
+# define FLAG_H return ((short)va_arg(ap, int));
+# define FLAG_L return (va_arg(ap, long));
+# define FLAG_LL return (va_arg(ap, long long));
+# define FLAG_J return (va_arg(ap, intmax_t));
+# define FLAG_Z return (va_arg(ap, ssize_t));
 
 intmax_t	ft_int_len(char length, va_list ap)
 {
-	if (length == hh)
-		return ((signed char)va_arg(ap, int));
-	if (length == h)
-		return ((short)va_arg(ap, int));
-	if (length == l)
-		return (va_arg(ap, long));
-	if (length == ll)
-		return (va_arg(ap, long long));
-	if (length == j)
-		return (va_arg(ap, intmax_t));
-	if (length == z)
-		return (va_arg(ap, ssize_t));
+	t_num	head;
+
+	head.length = length;
+	if (head.length == hh)
+		FLAG_HH;
+	if (head.length == h)
+		FLAG_H;
+	if (head.length == l)
+		FLAG_L;
+	if (head.length == ll)
+		FLAG_LL;
+	if (head.length == j)
+		FLAG_J;
+	if (head.length == z)
+		FLAG_Z;
 	return (va_arg(ap, int));
 }
 
 void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	intmax_t	ival;
-	char		*str;
-
+	t_num	head;
+	
 	if (pfinfo->spec == 'D')
 		pfinfo->length = l;
 	if (pfinfo->spec == 'i' || pfinfo->spec == 'D')
 		pfinfo->spec = 'd';
-	ival = ft_int_len(pfinfo->length, ap);
-	str = ft_imaxtoa(ival);
+	head.val = ft_int_len(pfinfo->length, ap);
+	head.s = ft_imaxtoa(head.val);
 	if (pfinfo->prec != -1 && pfinfo->flags & ZER)
 		pfinfo->flags ^= ZER;
-	if (pfinfo->prec == 0 && !ft_strcmp("0", str))
-		*str = '\0';
-	if (((pfinfo->flags & POS || pfinfo->flags & INV) && str[0] != '-')
+	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s))
+		head.s[0] = '\0';
+	if (((pfinfo->flags & POS || pfinfo->flags & INV) && head.s[0] != '-')
 														&& pfinfo->spec == 'd')
 	{
-		ft_insrt_to_str(&str, (pfinfo->flags & INV) ? " " : "+");
-		str[0] = ((pfinfo->flags & POS)) ? '+' : str[0];
+		ft_insrt_to_str(&head.s, (pfinfo->flags & INV) ? " " : "+");
+		head.s[0] = ((pfinfo->flags & POS)) ? '+' : head.s[0];
 	}
-	ft_prec_nums(pfinfo, &str);
-	ft_pad_handle(pfinfo, &str);
-	ft_vector_append(vector, str);
-	free(str);
+	ft_prec_nums(pfinfo, &head.s);
+	ft_pad_handle(pfinfo, &head.s);
+	ft_vector_append(vector, head.s);
+	free(head.s);
 }
 
 void		ft_octal_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	uintmax_t	oct;
-	char		*str;
+	t_num	head;
 
 	if (pfinfo->spec == 'O')
 		pfinfo->length = l;
-	oct = ft_xou_len(pfinfo->length, ap);
-	str = ft_uimaxtoa_base(oct, 8, "01234567");
-	ft_handle_xou(&str, pfinfo);
-	ft_vector_append(vector, str);
-	free(str);
+	head.octal = ft_xou_len(pfinfo->length, ap);
+	head.s = ft_uimaxtoa_base(head.octal, 8, "01234567");
+	ft_handle_xou(&head.s, pfinfo);
+	ft_vector_append(vector, head.s);
+	free(head.s);
 }
 
 void		ft_hex_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	uintmax_t	hex;
-	char		*str;
+	t_num	head;
 
 	if (pfinfo->spec == 'p')
 		pfinfo->length = j;
-	hex = ft_xou_len(pfinfo->length, ap);
-	str = ft_uimaxtoa_base(hex, 16, "0123456789abcdef");
+	head.hex = ft_xou_len(pfinfo->length, ap);
+	head.s = ft_uimaxtoa_base(head.hex, 16, "0123456789abcdef");
 	if (pfinfo->spec == 'p' && pfinfo->flags & ZER && pfinfo->pset)
 		pfinfo->flags ^= ZER;
-	ft_handle_xou(&str, pfinfo);
-	ft_vector_append(vector, str);
-	free(str);
+	ft_handle_xou(&head.s, pfinfo);
+	ft_vector_append(vector, head.s);
+	free(head.s);
 }
 
 void		ft_uns_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	uintmax_t	uns;
-	char		*str;
+	t_num	head;
 
 	if (pfinfo->spec == 'U')
 		pfinfo->length = l;
-	uns = ft_xou_len(pfinfo->length, ap);
-	str = ft_uimaxtoa_base(uns, 10, "0123456789");
-	ft_handle_xou(&str, pfinfo);
-	ft_vector_append(vector, str);
-	free(str);
+	head.unsonian = ft_xou_len(pfinfo->length, ap);
+	head.s = ft_uimaxtoa_base(head.unsonian, 10, "0123456789");
+	ft_handle_xou(&head.s, pfinfo);
+	ft_vector_append(vector, head.s);
+	free(head.s);
 }
