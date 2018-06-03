@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 14:16:51 by gguiulfo          #+#    #+#             */
-/*   Updated: 2018/06/03 11:09:59 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 11:12:37 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ wchar_t	*ft_wstrdup(wchar_t *str)
 		head->size++;
 	}
 	head->duplicate[head->size] = '\0';
-	free(head);
 	return (head->duplicate);
 }
 
