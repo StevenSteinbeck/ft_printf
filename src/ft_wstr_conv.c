@@ -99,12 +99,15 @@ char	*ft_wstr_to_str(wchar_t *wstr)
 void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_wstr	head;
-
+	t_wstr	*top;
+	
+	top = malloc(sizeof(t_wstr));
 	head.duplicate = va_arg(ap, wchar_t *);
 	if (!head.duplicate	)
 		head.value = ft_null_str(pfinfo);
 	else
 	{
+		top->duplicate = ft_wstrdup(head.duplicate);
 		head.duplicate = ft_wstrdup(head.duplicate);
 		ft_prec_wstr(pfinfo, head.duplicate);
 		head.value = ft_wstr_to_str(head.duplicate);
@@ -113,4 +116,5 @@ void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	ft_pad_handle(pfinfo, &head.value);
 	ft_vector_append(vector, head.value);
 	free(head.value);
+	free(top);
 }
