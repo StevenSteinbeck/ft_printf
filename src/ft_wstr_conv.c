@@ -79,16 +79,20 @@ void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 char	*ft_wstr_to_str(wchar_t *wstr)
 {
 	t_wstr	head;
+	t_wstr	*top;
 
+	top = malloc(iszeof(t_wstr));
 	head.i_val = 0;
 	head.size = 0;
 	head.value = ft_strnew(ft_wstrlen(wstr));
 	while (wstr[head.i_val])
 	{
+		top->size = ft_unicode_b(wstr[head.i_val]);
 		ft_unicode_conv(wstr[head.i_val], head.value + head.size);
 		head.size += ft_unicode_b(wstr[head.i_val]);
 		head.i_val++;
 	}
+	free(top);
 	return (head.value);
 }
 
