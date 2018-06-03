@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 14:16:51 by gguiulfo          #+#    #+#             */
+/*   Created: 2017/04/05 14:16:51 by gguiulfio         #+#    #+#             */
 /*   Updated: 2018/06/03 11:33:44 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -78,20 +78,18 @@ void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 
 char	*ft_wstr_to_str(wchar_t *wstr)
 {
-	char	*ret;
-	size_t	i;
-	size_t	pos;
+	t_wstr	head;
 
-	i = 0;
-	pos = 0;
-	ret = ft_strnew(ft_wstrlen(wstr));
-	while (wstr[i])
+	head.i_value = 0;
+	head.size = 0;
+	head.value = ft_strnew(ft_wstrlen(wstr));
+	while (wstr[head.i_value])
 	{
-		ft_unicode_conv(wstr[i], ret + pos);
-		pos += ft_unicode_b(wstr[i]);
-		i++;
+		ft_unicode_conv(wstr[head.i_value], ret + head.size);
+		head.size += ft_unicode_b(wstr[head.i_value]);
+		head.i_value++;
 	}
-	return (ret);
+	return (head.value);
 }
 
 void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
