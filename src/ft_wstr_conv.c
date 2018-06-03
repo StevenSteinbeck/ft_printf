@@ -68,7 +68,7 @@ void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 		return ;
 	while (str[head.i_val] && head.size <= (size_t)pfinfo->prec)
 	{
-		head->top = ft_unicode_b(str[head.i_val]);
+		top->size = ft_unicode_b(str[head.i_val]);
 		head.size += ft_unicode_b(str[head.i_val]);
 		head.i_val++;
 	}
