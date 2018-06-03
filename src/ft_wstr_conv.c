@@ -80,16 +80,16 @@ char	*ft_wstr_to_str(wchar_t *wstr)
 {
 	t_wstr	head;
 
-	head.i_value = 0;
+	head.i_val = 0;
 	head.size = 0;
 	head.value = ft_strnew(ft_wstrlen(wstr));
-	while (wstr[head.i_value])
+	while (wstr[head.i_val])
 	{
-		ft_unicode_conv(wstr[head.i_value], ret + head.size);
-		head.size += ft_unicode_b(wstr[head.i_value]);
-		head.i_value++;
+		ft_unicode_conv(wstr[head.i_val], ret + head.size);
+		head.size += ft_unicode_b(wstr[head.i_val]);
+		head.i_val++;
 	}
-	return (head.value);
+	return (head.val);
 }
 
 void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
