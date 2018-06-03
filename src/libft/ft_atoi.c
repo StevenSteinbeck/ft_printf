@@ -3,33 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gguiulfo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/27 11:06:41 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/03/05 19:35:01 by gguiulfo         ###   ########.fr       */
+/*   Created: 2018/02/19 10:31:54 by stestein          #+#    #+#             */
+/*   Updated: 2018/03/12 20:05:39 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	unsigned long long	result;
-	int					i;
-	int					sign;
+	unsigned int	i;
+	int				res;
+	int				sign;
 
 	i = 0;
-	result = 0;
-	while (ISSPACE(*str))
-		str++;
-	sign = (*str == '-') ? -1 : 1;
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str == '0')
-		str++;
-	while (ISDIGIT(str[i]))
-		result = result * 10 + str[i++] - '0';
-	if (i > 19 || result > 9223372036854775807)
-		return ((sign == 1) ? -1 : 0);
-	return ((int)result * sign);
+	res = 0;
+	sign = 1;
+	while (str[i] == '\n' || str[i] == ' ' || str[i] == '\f' || str[i] == '\t'
+			|| str[i] == '\v' || str[i] == '\r')
+		i++;
+	if (str[i] == '-')
+		sign = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (res * sign);
 }
