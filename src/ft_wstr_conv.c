@@ -38,17 +38,16 @@ wchar_t	*ft_wstrdup(wchar_t *str)
 
 size_t	ft_wstrlen(wchar_t *str)
 {
-	size_t count;
-	size_t i;
+	t_wstr head;
 
-	i = 0;
-	count = 0;
-	while (str[i])
+	head.i_val = 0;
+	head.size = 0;
+	while (str[head.i_val])
 	{
-		count += ft_unicode_b(str[i]);
-		i++;
+		head.size += ft_unicode_b(str[head.i_val]);
+		head.i_val++;
 	}
-	return (count);
+	return (head.size);
 }
 
 void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
