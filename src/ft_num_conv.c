@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 12:21:45 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 12:31:13 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ intmax_t	ft_int_len(char length, va_list ap)
 {
 	t_num	head;
 
-	head.length = length;
-	if (head.length == hh)
+	head.l = length;
+	if (head.l == hh)
 		FLAG_HH;
-	if (head.length == h)
+	if (head.l == h)
 		FLAG_H;
-	if (head.length == l)
+	if (head.l == l)
 		FLAG_L;
-	if (head.length == ll)
+	if (head.l == ll)
 		FLAG_LL;
-	if (head.length == j)
+	if (head.l == j)
 		FLAG_J;
-	if (head.length == z)
+	if (head.l == z)
 		FLAG_Z;
 	return (va_arg(ap, int));
 }
