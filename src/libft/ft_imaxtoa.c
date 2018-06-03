@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:38:27 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/31 13:57:02 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 13:01:34 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 char	*ft_imaxtoa(intmax_t value)
 {
-	t_libft		*head;
+	t_libft		head;
 
-	head = malloc(sizeof(t_libft));
-	head->intmx = (value < 0) ? -value : value;
-	head->size = 1 + (value < 0);
-	while ((head->intmx /= 10))
-		head->size++;
-	head->ret = (char *)malloc(sizeof(char) * (head->size + 1));
-	head->ret[head->size] = '\0';
-	head->intmx = (value < 0) ? -value : value;
-	head->ret[--head->size] = "0123456789"[head->intmx % 10];
-	while ((head->intmx /= 10))
-		head->ret[--head->size] = "0123456789"[head->intmx % 10];
+	head.intmx = (value < 0) ? -value : value;
+	head.size = 1 + (value < 0);
+	while ((head.intmx /= 10))
+		head.size++;
+	head.ret = (char *)malloc(sizeof(char) * (head.size + 1));
+	head.ret[head.size] = '\0';
+	head.intmx = (value < 0) ? -value : value;
+	head.ret[--head.size] = "0123456789"[head.intmx % 10];
+	while ((head.intmx /= 10))
+		head.ret[--head.size] = "0123456789"[head.intmx % 10];
 	if (value < 0)
-		head->ret[--head->size] = '-';
-	free(head);
-	return (head->ret);
+		head.ret[--head.size] = '-';
+	return (head.ret);
 }
