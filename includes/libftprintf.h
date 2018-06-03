@@ -36,7 +36,7 @@ typedef	struct	s_uimax
 {
 	uintmax_t	i_val;
 	size_t		size;
-	char		*return;
+	char		*retrn;
 }		t_uimax;
 
 typedef	struct	s_xou
