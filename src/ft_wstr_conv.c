@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 14:16:51 by gguiulfo          #+#    #+#             */
-/*   Updated: 2018/06/03 11:28:44 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 11:33:44 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,22 @@ size_t	ft_wstrlen(wchar_t *str)
 
 void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 {
+	t_wstr	head;
 	size_t count;
 	size_t i;
 
-	i = 0;
-	count = 0;
+	head.i_val = 0;
+	head.size = 0;
 	if (pfinfo->prec == -1)
 		return ;
 	if (ft_wstrlen(str) <= (size_t)pfinfo->prec)
 		return ;
-	while (str[i] && count <= (size_t)pfinfo->prec)
+	while (str[head.i_val] && head.size <= (size_t)pfinfo->prec)
 	{
-		count += ft_unicode_b(str[i]);
-		i++;
+		head.size += ft_unicode_b(str[head.i_val]);
+		head.i_val++;
 	}
-	str[i - 1] = '\0';
+	str[head.i_val - 1] = '\0';
 }
 
 char	*ft_wstr_to_str(wchar_t *wstr)
