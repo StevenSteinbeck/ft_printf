@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:51:24 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 13:51:25 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 12:11:06 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,15 @@ void	ft_prec_wstr(t_info *pfinfo, wchar_t *str)
 	head.i_val = 0;
 	head.size = 0;
 	if (pfinfo->prec == -1)
+	{
+		free(top);
 		return ;
+	}
 	if (ft_wstrlen(str) <= (size_t)pfinfo->prec)
+	{
+		free(top);
 		return ;
+	}
 	while (str[head.i_val] && head.size <= (size_t)pfinfo->prec)
 	{
 		top->size = ft_unicode_b(str[head.i_val]);

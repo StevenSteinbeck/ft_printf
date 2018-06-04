@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:23:32 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 12:12:31 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 			head.res = (*(*format + 1) == 'l') ? 3 : 2;
 		pfinfo->length = MAX(head.res, pfinfo->length);
 		++*format;
+		free(top);
 		return (true);
 	}
+	free(top);
 	return (false);
 }

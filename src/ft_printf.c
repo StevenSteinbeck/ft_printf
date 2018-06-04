@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:52:02 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/29 16:15:58 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 12:07:08 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int		ft_printf(const char *format, ...)
 
 	head = malloc(sizeof(t_printf));
 	if (!format || !*format)
+	{
+		free(head);
 		return (0);
+	}
 	va_start(ap, format);
 	head->len = ft_vasprintf(&head->ret, format, ap);
 	write(1, head->ret, head->len);
@@ -64,7 +67,10 @@ int		ft_sprintf(char *str, const char *format, ...)
 
 	head = NULL;
 	if (!str || !format)
+	{
+		free(head);
 		return (0);
+	}
 	va_start(ap, format);
 	head->len = ft_vasprintf(&head->ret, format, ap);
 	ft_strcpy(str, head->ret);
@@ -82,11 +88,17 @@ int		ft_snprintf(char *str, size_t size, const char *format, ...)
 	head = NULL;
 	head = malloc(sizeof(t_printf));
 	if (!str || !format)
+	{
+		free(head);
 		return (0);
+	}
 	va_start(ap, format);
 	head->len = ft_vasprintf(&head->ret, format, ap);
 	if (size == 0)
+	{
+		free(head);
 		return (head->len);
+	}
 	else if (size - 1 == 0)
 		str[0] = '\0';
 	ft_strncpy(str, head->ret, size - 1);
@@ -104,7 +116,10 @@ int		ft_dprintf(int fd, const char *format, ...)
 	head = NULL;
 	head = malloc(sizeof(t_printf));
 	if (!format || !*format || fd < 0)
+	{
+		free(head);
 		return (0);
+	}
 	va_start(ap, format);
 	head->len = ft_vasprintf(&head->ret, format, ap);
 	write(fd, head->ret, head->len);
