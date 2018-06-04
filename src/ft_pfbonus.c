@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 16:32:05 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:48:24 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:49:08 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ intmax_t	*ft_printf_n_len(t_info *pfinfo, va_list ap)
 	i = 0;
 	if (pfinfo->length == hh && i < 33)
 		FLAG_HH;
-	i++
+	i++;
 	if (pfinfo->length == h && i < 33)
 		FLAG_H;
 	if (pfinfo->length == l && i < 33)
