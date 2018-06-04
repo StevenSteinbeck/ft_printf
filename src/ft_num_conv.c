@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:35:55 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:42:37 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 		pfinfo->spec = 'd';
 	head.val = ft_int_len(pfinfo->length, ap);
 	head.s = ft_imaxtoa(head.val);
-	if (pfinfo->prec != -1 && pfinfo->flags & ZER)
+	if (pfinfo->prec != -1 && pfinfo->flags & ZER && head.s != 0)
 		pfinfo->flags ^= ZER;
-	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s))
+	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s) && head.s != 0)
 		head.s[0] = '\0';
 	if (((pfinfo->flags & POS || pfinfo->flags & INV) && head.s[0] != '-')
 														&& pfinfo->spec == 'd')
@@ -72,40 +72,52 @@ void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 void		ft_octal_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_num	head;
+	t_num	*top;
 
+	top = malloc(sizeof(t_num));
 	if (pfinfo->spec == 'O')
 		pfinfo->length = l;
 	head.octal = ft_xou_len(pfinfo->length, ap);
 	head.s = ft_uimaxtoa_base(head.octal, 8, "01234567");
+	top->s = head.s;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
 	free(head.s);
+	free(top);
 }
 
 void		ft_hex_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_num	head;
+	t_num	*top;
 
+	top = malloc(sizeof(t_num));
 	if (pfinfo->spec == 'p')
 		pfinfo->length = j;
 	head.hex = ft_xou_len(pfinfo->length, ap);
 	head.s = ft_uimaxtoa_base(head.hex, 16, "0123456789abcdef");
+	top->s = head.s
 	if (pfinfo->spec == 'p' && pfinfo->flags & ZER && pfinfo->pset)
 		pfinfo->flags ^= ZER;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
 	free(head.s);
+	free(top);
 }
 
 void		ft_uns_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_num	head;
+	t_num	*top;
 
+	top = malloc(sizeof(t_num));
 	if (pfinfo->spec == 'U')
 		pfinfo->length = l;
 	head.unsonian = ft_xou_len(pfinfo->length, ap);
 	head.s = ft_uimaxtoa_base(head.unsonian, 10, "0123456789");
+	top->s = head.s;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
 	free(head.s);
+	free(top);
 }
