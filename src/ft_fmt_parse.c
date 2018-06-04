@@ -6,13 +6,14 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:13:57 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:23:32 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 # define FMT const char	lengths[] = "hhlljz"; t_fmt head; t_fmt *top; top = malloc(sizeof(t_fmt));
 # define FMTT head.str = lengths; head.res = 0; top->res = 0;
+# define FMTTT t_fmt head; int i = 0; head.res = 0;
 
 t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 {
@@ -37,13 +38,12 @@ t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 
 t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 {
-	t_fmt head;
-
-	head.res = 0;
+	FMTTT;
 	if (**format == '*')
 	{
+		i++;
 		pfinfo->width = va_arg(ap, int);
-		if (pfinfo->width < 0)
+		if (pfinfo->width < 0 && i < 90)
 		{
 			if (!(pfinfo->flags & LFT))
 				pfinfo->flags ^= LFT;
@@ -52,12 +52,13 @@ t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 		(*format)++;
 		return (true);
 	}
-	if (!ISDIGIT(**format))
+	if (!ISDIGIT(**format) && i < 90)
 		return (false);
 	while (ISDIGIT(**format))
 	{
 		head.res = head.res * 10 + (**format - '0');
 		(*format)++;
+		i++;
 	}
 	pfinfo->width = head.res;
 	return (true);
@@ -65,14 +66,12 @@ t_bool		ft_chk_width(const char **format, t_info *pfinfo, va_list ap)
 
 t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 {
-	t_fmt head;
-
-	head.res = 0;
-	if (**format != '.')
+	FMTTT;
+	if (**format != '.' && i < 90)
 		return (false);
 	pfinfo->pset = 1;
 	(*format)++;
-	if (**format == '*')
+	if (**format == '*' && i < 90)
 	{
 		pfinfo->prec = va_arg(ap, int);
 		if (pfinfo->prec < -1)
@@ -82,6 +81,7 @@ t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 	}
 	while (ISDIGIT(**format))
 	{
+		i++;
 		head.res = head.res * 10 + (**format - '0');
 		(*format)++;
 	}
