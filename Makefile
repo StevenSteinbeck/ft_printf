@@ -6,7 +6,7 @@
 #    By: stestein <marvin@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/24 21:16:40 by stestein          #+#    #+#              #
-#    Updated: 2018/05/31 14:35:38 by stestein         ###   ########.fr        #
+#    Updated: 2018/06/04 12:54:47 by stestein         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILES = ft_printf.c \
 		ft_float_conv.c \
 		ft_handle_spec.c \
 		ft_wstr_conv.c \
-		ft_pfbonus.c
+		ft_pfbonus.c 
 
 LIBFILES =	ft_strlen.c \
 			ft_strndup.c \
