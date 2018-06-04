@@ -6,12 +6,12 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:58:12 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:37:16 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 11:53:48 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-# define HANDLE t_spec head; head.format = format; int i;
+# define HANDLE t_spec head; head.format = format; int i = 0;
 # define HANDLEE pfinfo->width = 0; pfinfo->prec = -1; pfinfo->spec = 'N';
 # define HANDLEEE pfinfo->flags = 0; pfinfo->length = -1; pfinfo->pset = 0;
 
