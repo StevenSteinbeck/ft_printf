@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:58:12 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:31:06 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:37:16 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_get_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 		if (pfinfo->spec == g_convtbl[head.i].spec)
 		{
 			g_convtbl[head.i].f(vector, pfinfo, ap);
+			free(top);
 			return ;
 		}
 	}
@@ -122,11 +123,15 @@ void	ft_pfinfo_init(t_info *pfinfo)
 void	ft_pct_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_spec head;
+	t_spec *new;
 
+	new = malloc(sizeof(t_spec));
 	(void)ap;
 	head.str = ft_strnew(1);
+	new->str = head.str;
 	*head.str = pfinfo->spec;
 	ft_pad_handle(pfinfo, &head.str);
 	ft_vector_append(vector, head.str);
 	free(head.str);
+	free(new);
 }
