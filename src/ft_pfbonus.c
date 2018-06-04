@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 16:32:05 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 12:32:15 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:48:24 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,44 +58,59 @@ char g_colors[33][2][15] = {
 t_bool		ft_pfcolors(t_vector *vector, const char **format)
 {
 	t_bonus head;
+	t_bonus	*top;
 
+	top = malloc(sizeof(t_bonus));
 	while (head.i < 33)
 	{
+		top->i = head.i;
 		if (ft_strnstr(*format, g_colors[head.i][0], ft_strlen(g_colors[head.i][0])) != 0)
 		{
+			top->i++;
 			ft_vector_append(vector, g_colors[head.i][1]);
 			*format = *format + ft_strlen(g_colors[head.i][0]);
+			free(top);
 			return (true);
 		}
 		++head.i;
 	}
+	free(top);
 	return (false);
 }
 
 void		ft_binary_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_num	head;
+	t_num	*top;
 
+	top = malloc(sizeof(t_num));
 	head.hex = va_arg(ap, unsigned long long);
 	head.s = ft_uimaxtoa_base(head.hex, 2, "01");
+	top->s = head.s;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
 	free(head.s);
+	free(top);
 }
 
 intmax_t	*ft_printf_n_len(t_info *pfinfo, va_list ap)
 {
-	if (pfinfo->length == hh)
+	int i;
+
+	i = 0;
+	if (pfinfo->length == hh && i < 33)
 		FLAG_HH;
-	if (pfinfo->length == h)
+	i++
+	if (pfinfo->length == h && i < 33)
 		FLAG_H;
-	if (pfinfo->length == l)
+	if (pfinfo->length == l && i < 33)
 		FLAG_L;
-	if (pfinfo->length == ll)
+	if (pfinfo->length == ll && i < 33)
 		FLAG_LL;
-	if (pfinfo->length == j)
+	i++
+	if (pfinfo->length == j && i < 33)
 		FLAG_J;
-	if (pfinfo->length == z)
+	if (pfinfo->length == z && i < 33)
 		FLAG_Z;
 	return ((intmax_t *)va_arg(ap, int *));
 }
@@ -103,8 +118,12 @@ intmax_t	*ft_printf_n_len(t_info *pfinfo, va_list ap)
 void		ft_none_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_bonus	head;
+	t_bonus	*top;
 
+	top = malloc(sizeof(t_bonus));
 	head.i = vector->len;
+	top->i = head.i;
 	head.d = ft_printf_n_len(pfinfo, ap);
 	*head.d = (intmax_t)head.i;
+	free(top);
 }
