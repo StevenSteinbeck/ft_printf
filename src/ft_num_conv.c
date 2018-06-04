@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 12:31:13 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:35:04 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@
 intmax_t	ft_int_len(char length, va_list ap)
 {
 	t_num	head;
+	t_num	*top;
 
+	top = malloc(sizeof(t_num));
 	head.l = length;
+	top->l = head.l
+	free(top);
 	if (head.l == hh)
 		FLAG_HH;
 	if (head.l == h)
