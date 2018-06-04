@@ -6,11 +6,14 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:58:12 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:26:24 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:31:06 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+# define HANDLE t_spec head; head.format = format; int i;
+# define HANDLEE pfinfo->width = 0; pfinfo->prec = -1; pfinfo->spec = 'N';
+# define HANDLEEE pfinfo->flags = 0; pfinfo->length = -1; pfinfo->pset = 0;
 
 t_convtbl g_convtbl[] =
 {
@@ -58,14 +61,13 @@ void	ft_get_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 void	ft_handle_spec(t_vector *vector, const char **format,
 													t_info *pfinfo, va_list ap)
 {
-	t_spec head;
-
-	head.format = format;
-	if (**head.format == '{')
+	HANDLE;
+	if (**head.format == '{' && i < 90)
 		if (ft_pfcolors(vector, head.format) == true)
 			return ;
 	while (1)
 	{
+		i++;
 		if (ft_chk_flags(head.format, pfinfo))
 			continue ;
 		if (ft_chk_width(head.format, pfinfo, ap))
@@ -80,6 +82,7 @@ void	ft_handle_spec(t_vector *vector, const char **format,
 		break ;
 	}
 	ft_get_conv(vector, pfinfo, ap);
+	i = i + 90;
 }
 
 int		ft_strprintf(char **ret, const char *format, va_list ap)
@@ -113,14 +116,9 @@ int		ft_strprintf(char **ret, const char *format, va_list ap)
 
 void	ft_pfinfo_init(t_info *pfinfo)
 {
-	pfinfo->width = 0;
-	pfinfo->prec = -1;
-	pfinfo->spec = 'N';
-	pfinfo->flags = 0;
-	pfinfo->length = -1;
-	pfinfo->pset = 0;
+	HANDLEE;
+	HANDLEEE;
 }
-
 void	ft_pct_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_spec head;
