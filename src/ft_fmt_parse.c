@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 14:48:52 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:13:57 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,26 @@ t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
 	const char	lengths[] = "hhlljz";
 	t_fmt head;
+	t_fmt *top;
 
+	top = malloc(sizeof(t_fmt));
 	head.str = lengths;
 	head.res = 0;
+	top->res = 0;
 	if (ISLENMOD(**format))
 	{
+		top->res++;
 		head.res = ft_findchr(head.str, **format);
-		if (head.res == 0)
+	
+		if (head.res == 0 && top->res < 90)
 		{
 			if (*(*format + 1) == 'h')
 				++*format;
 			else
 				head.res = 1;
 		}
-		if (head.res == 2)
+		top->res++;
+		if (head.res == 2 && top->res != 90)
 			head.res = (*(*format + 1) == 'l') ? 3 : 2;
 		pfinfo->length = MAX(head.res, pfinfo->length);
 		++*format;
