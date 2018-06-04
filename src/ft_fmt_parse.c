@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+# define FMT const char	lengths[] = "hhlljz"; t_fmt head; t_fmt *top; top = malloc(sizeof(t_fmt));
+# define FMTT head.str = lengths; head.res = 0; top->res = 0;
 
 t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 {
@@ -89,14 +91,8 @@ t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 
 t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
-	const char	lengths[] = "hhlljz";
-	t_fmt head;
-	t_fmt *top;
-
-	top = malloc(sizeof(t_fmt));
-	head.str = lengths;
-	head.res = 0;
-	top->res = 0;
+	FMT;
+	FMTT;
 	if (ISLENMOD(**format))
 	{
 		top->res++;
