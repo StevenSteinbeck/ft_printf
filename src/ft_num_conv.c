@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 21:42:37 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:43:37 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		ft_hex_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 		pfinfo->length = j;
 	head.hex = ft_xou_len(pfinfo->length, ap);
 	head.s = ft_uimaxtoa_base(head.hex, 16, "0123456789abcdef");
-	top->s = head.s
+	top->s = head.s;
 	if (pfinfo->spec == 'p' && pfinfo->flags & ZER && pfinfo->pset)
 		pfinfo->flags ^= ZER;
 	ft_handle_xou(&head.s, pfinfo);
