@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:55:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 13:56:01 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 16:33:04 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_recalloc(void *ptr, size_t src_size, size_t new_size)
 {
-	void *new_ptr;
+	t_libft	*top;
 
 	if (!new_size)
 	{
@@ -26,11 +26,13 @@ void	*ft_recalloc(void *ptr, size_t src_size, size_t new_size)
 		return (ft_memalloc(new_size));
 	if (new_size <= src_size)
 		return (ptr);
-	new_ptr = ft_memalloc(new_size);
-	if (new_ptr)
+	top = malloc(sizeof(t_libft));
+	top->new_ptr = ft_memalloc(new_size);
+	if (top->new_ptr)
 	{
-		ft_memcpy(new_ptr, ptr, src_size);
+		ft_memcpy(top->new_ptr, ptr, src_size);
 		free(ptr);
 	}
+	free(top);
 	return (new_ptr);
 }
