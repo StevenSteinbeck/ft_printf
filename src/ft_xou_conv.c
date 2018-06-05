@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 19:26:48 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 12:11:20 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 15:57:15 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ uintmax_t	ft_xou_len(char length, va_list ap)
 void		ft_handle_alt(t_info *pfinfo, char **str)
 {
 	t_printf	head;
+	t_printf	*top;
 
 	if (!(ISXO(pfinfo->spec) || pfinfo->spec == 'p' || pfinfo->spec == 'b'))
 		return ;
+	top = malloc(sizeof(t_printf));
 	head.ret = ft_strdup(*str);
 	if (pfinfo->spec == 'p')
 		ft_insrt_to_str(&head.ret, "0x");
@@ -57,22 +59,30 @@ void		ft_handle_alt(t_info *pfinfo, char **str)
 			ft_insrt_to_str(&head.ret, "0");
 	}
 	free(*str);
+	free(top);
 	*str = head.ret;
 }
 
 void		ft_x_toupper(char *str, char spec)
 {
 	t_xou	head;
+	t_xou	*top;
 
+	top = malloc(sizeof(t_xou));
 	head.size = spec;
+	top->size = spec;
 	if (head.size != 'X')
+	{
+		free(top);
 		return ;
+	}
 	while (*str)
 	{
 		if (ISALPHA(*str))
 			*str = TOUPPER(*str);
 		str++;
 	}
+	free(top);
 }
 
 void		ft_handle_xou(char **str, t_info *pfinfo)
