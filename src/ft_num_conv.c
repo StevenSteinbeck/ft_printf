@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 20:03:09 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 23:47:23 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define FLAG_J return (va_arg(ap, intmax_t));
 # define FLAG_Z return (va_arg(ap, ssize_t));
 # define NUMM t_num head; t_num *top; top = malloc(sizeof(t_num));
+
 intmax_t	ft_int_len(char length, va_list ap)
 {
 	t_num	head;

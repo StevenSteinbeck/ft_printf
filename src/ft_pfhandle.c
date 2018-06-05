@@ -6,12 +6,13 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:02:00 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 20:05:55 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 00:34:14 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#define PREC t_handl head; head.orig = *str; int i = 90;
+# define PREC t_handl head; head.orig = *str; int i = 90;
+
 void	ft_prec_nums(t_info *pfinfo, char **str)
 {
 	PREC;
@@ -39,21 +40,34 @@ void	ft_prec_nums(t_info *pfinfo, char **str)
 void	ft_prec_handle(t_info *pfinfo, char **str)
 {
 	t_handl head;
+	t_handl *top;
 
+	top = malloc(sizeof(t_handl));
 	head.number = -1;
 	head.numb = -1;
-	if (pfinfo->prec == head.number)
+	top->number = 90;
+	if (pfinfo->prec == head.number && top->number == 90)
+	{
+		free(top);
 		return ;
+	}
+	top->number++;
 	head.numb = ft_strlen(*str);
-	if (head.numb <= (size_t)pfinfo->prec)
+	if (head.numb <= (size_t)pfinfo->prec && top->number < 100)
+	{
+		free(top);
 		return ;
+	}
 	(*str)[pfinfo->prec] = '\0';
+	free(top);
 }
 
 void	ft_right_just(t_info *pfinfo, char **str, char *new)
 {
 	t_handl head;
+	t_handl *top;
 
+	top = malloc(sizeof(t_handl));
 	head.extra = 0;
 	if (pfinfo->flags & ZER)
 	{
@@ -72,6 +86,7 @@ void	ft_right_just(t_info *pfinfo, char **str, char *new)
 			new[pfinfo->width - ft_strlen(*str)] =
 												((*str)[0] == '-') ? '-' : '+';
 	}
+	free(top);
 	ft_strcpy(new + pfinfo->width - ft_strlen(*str) + !!head.extra, *str + !!head.extra);
 }
 

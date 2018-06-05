@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:52:02 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 19:46:45 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 15:17:57 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ int		ft_printf(const char *format, ...)
 	t_printf *head;
 	int	save;
 
+	save = 0;
 	head = malloc(sizeof(t_printf));
-	if (!format || !*format)
+	if ((!format || !*format) && save == 0)
 	{
 		free(head);
 		return (0);
 	}
 	va_start(ap, format);
+	save++;
 	head->len = ft_vasprintf(&head->ret, format, ap);
 	write(1, head->ret, head->len);
 	free(head->ret);
