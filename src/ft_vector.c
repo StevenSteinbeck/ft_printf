@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 18:40:18 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 15:51:31 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 15:53:49 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,30 @@ void	ft_vector_resize(t_vector *vector, size_t min)
 void	ft_vector_nappend(t_vector *vector, char *newdata, size_t n)
 {
 	t_vect	head;
+	t_vect	*top;
 
+	top = malloc(sizeof(t_vect));
 	head.size = n;
+	top->size = n;
 	if (vector->cap < vector->len + head.size)
 		ft_vector_resize(vector, vector->len + head.size);
 	ft_memcpy(vector->data + vector->len, newdata, head.size);
+	free(top);
 	vector->len += head.size;
 }
 
 void	ft_vector_free(t_vector *vector)
 {
 	t_vect	head;
+	t_vect	*top;
 
+	top = malloc(sizeof(t_vect));
 	head.string = vector->data;
+	top->string = head.string;
 	if (head.string && vector->cap > 0)
 	{
 		free(head.string);
 		head.string = NULL;
 	}
+	free(top);
 }
