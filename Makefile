@@ -6,13 +6,13 @@
 #    By: stestein <marvin@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/24 21:16:40 by stestein          #+#    #+#              #
-#    Updated: 2018/06/04 12:54:47 by stestein         ###   ########.fr        #
+#    Updated: 2018/06/04 18:04:49 by stestein         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS += -Wall -Wextra -Werror -fsanitize=address
 CFLAGS += -I includes/
 
 FILES = ft_printf.c \

@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:52:02 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 12:54:24 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 13:45:11 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		ft_printf(const char *format, ...)
 {
 	va_list ap;
 	t_printf *head;
+	int	save;
 
 	head = malloc(sizeof(t_printf));
 	if (!format || !*format)
@@ -28,13 +29,15 @@ int		ft_printf(const char *format, ...)
 	write(1, head->ret, head->len);
 	free(head->ret);
 	va_end(ap);
+	save = head->len;
 	free(head);
-	return (head->len);
+	return (save);
 }
 
 int		ft_vasprintf(char **ret, const char *format, va_list ap)
 {
 	t_printf *head;
+	const char	*retrn;
 
 	head = NULL;
 	head = malloc(sizeof(t_printf));
@@ -56,14 +59,16 @@ int		ft_vasprintf(char **ret, const char *format, va_list ap)
 		free(head);
 		return (ft_strlen(*ret));
 	}
+	retrn = head->format;
 	free(head);
-	return (ft_strprintf(ret, head->format, ap));
+	return (ft_strprintf(ret, retrn, ap));
 }
 
 int		ft_sprintf(char *str, const char *format, ...)
 {
 	va_list ap;
 	t_printf *head;
+	int		retrn;
 
 	head = NULL;
 	if (!str || !format)
@@ -76,14 +81,16 @@ int		ft_sprintf(char *str, const char *format, ...)
 	ft_strcpy(str, head->ret);
 	free(head->ret);
 	va_end(ap);
+	retrn = head->len;
 	free(head);
-	return (head->len);
+	return (retrn);
 }
 
 int		ft_snprintf(char *str, size_t size, const char *format, ...)
 {
 	va_list ap;
 	t_printf *head;
+	int		retrn;
 
 	head = NULL;
 	head = malloc(sizeof(t_printf));
@@ -104,14 +111,16 @@ int		ft_snprintf(char *str, size_t size, const char *format, ...)
 	ft_strncpy(str, head->ret, size - 1);
 	free(head->ret);
 	va_end(ap);
+	retrn = head->len;
 	free(head);
-	return (head->len);
+	return (retrn);
 }
 
 int		ft_dprintf(int fd, const char *format, ...)
 {
 	va_list ap;
 	t_printf *head;
+	int		retrn;
 
 	head = NULL;
 	head = malloc(sizeof(t_printf));
@@ -125,6 +134,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 	write(fd, head->ret, head->len);
 	free(head->ret);
 	va_end(ap);
+	retrn = head->len;
 	free(head);
-	return (head->len);
+	return (retrn);
 }

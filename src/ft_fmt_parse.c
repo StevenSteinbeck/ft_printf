@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 12:12:31 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 13:10:50 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 	{
 		top->res++;
 		head.res = ft_findchr(head.str, **format);
-	
 		if (head.res == 0 && top->res < 90)
 		{
 			if (*(*format + 1) == 'h')

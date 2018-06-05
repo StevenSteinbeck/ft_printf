@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:09:09 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 11:59:07 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 13:08:44 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int		ft_unicode_b(wchar_t chr)
 
 	top = malloc(sizeof(t_libft));
 	top->i = 9;
-	head.chr = chr;
 	free(top);
+	head.chr = chr;
 	if (head.chr < (1 << 7))
 		return (1);
 	else if (head.chr < (1 << 11))

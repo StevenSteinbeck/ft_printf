@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 12:13:30 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 13:03:04 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void		ft_octal_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	top->s = head.s;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
-	free(head.s);
 	free(top);
+	free(head.s);
 }
 
 void		ft_hex_conv(t_vector *vector, t_info *pfinfo, va_list ap)
@@ -101,8 +101,8 @@ void		ft_hex_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 		pfinfo->flags ^= ZER;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
-	free(head.s);
 	free(top);
+	free(head.s);
 }
 
 void		ft_uns_conv(t_vector *vector, t_info *pfinfo, va_list ap)
@@ -118,6 +118,6 @@ void		ft_uns_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	top->s = head.s;
 	ft_handle_xou(&head.s, pfinfo);
 	ft_vector_append(vector, head.s);
-	free(head.s);
 	free(top);
+	free(head.s);
 }
