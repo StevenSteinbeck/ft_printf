@@ -6,29 +6,31 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:59:16 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 13:59:17 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 16:07:44 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
+#include "libftprintf.h"
 
 char	*ft_imaxtoa(intmax_t value)
 {
-	uintmax_t	i;
-	intmax_t	size;
+	t_num		*top;
 	char		*ret;
 
-	i = (value < 0) ? -value : value;
-	size = 1 + (value < 0);
-	while ((i /= 10))
-		size++;
-	ret = (char *)malloc(sizeof(char) * (size + 1));
-	ret[size] = '\0';
-	i = (value < 0) ? -value : value;
-	ret[--size] = "0123456789"[i % 10];
-	while ((i /= 10))
-		ret[--size] = "0123456789"[i % 10];
+	top = malloc(sizeof(t_num));
+	top->hex = (value < 0) ? -value : value;
+	top->val = 1 + (value < 0);
+	while ((top->hex /= 10))
+		top->val++;
+	ret = (char *)malloc(sizeof(char) * (top->val + 1));
+	ret[top->val] = '\0';
+	top->hex = (value < 0) ? -value : value;
+	ret[--top->val] = "0123456789"[top->hex % 10];
+	while ((top->hex /= 10))
+		ret[--top->val] = "0123456789"[top->hex % 10];
 	if (value < 0)
-		ret[--size] = '-';
+		ret[--top->val] = '-';
+	free(top);
 	return (ret);
 }
