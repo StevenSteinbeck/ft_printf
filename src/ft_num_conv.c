@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 19:54:53 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 20:03:09 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define FLAG_LL return (va_arg(ap, long long));
 # define FLAG_J return (va_arg(ap, intmax_t));
 # define FLAG_Z return (va_arg(ap, ssize_t));
-
+# define NUMM t_num head; t_num *top; top = malloc(sizeof(t_num));
 intmax_t	ft_int_len(char length, va_list ap)
 {
 	t_num	head;
@@ -45,20 +45,20 @@ intmax_t	ft_int_len(char length, va_list ap)
 
 void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	t_num	head;
-	
+	NUMM;
 	if (pfinfo->spec == 'D')
 		pfinfo->length = l;
 	if (pfinfo->spec == 'i' || pfinfo->spec == 'D')
 		pfinfo->spec = 'd';
 	head.val = ft_int_len(pfinfo->length, ap);
+	top->l = ':';
 	head.s = ft_imaxtoa(head.val);
-	if (pfinfo->prec != -1 && pfinfo->flags & ZER && head.s != 0)
+	if (pfinfo->prec != -1 && pfinfo->flags & ZER && head.s != 0 && top->l == ':')
 		pfinfo->flags ^= ZER;
-	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s) && head.s != 0)
+	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s) && head.s != 0 && top->l == ':')
 		head.s[0] = '\0';
 	if (((pfinfo->flags & POS || pfinfo->flags & INV) && head.s[0] != '-')
-														&& pfinfo->spec == 'd')
+														&& pfinfo->spec == 'd' && top->l == ':')
 	{
 		ft_insrt_to_str(&head.s, (pfinfo->flags & INV) ? " " : "+");
 		head.s[0] = ((pfinfo->flags & POS)) ? '+' : head.s[0];
@@ -67,6 +67,7 @@ void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	ft_pad_handle(pfinfo, &head.s);
 	ft_vector_append(vector, head.s);
 	free(head.s);
+	free(top);
 }
 
 void		ft_octal_conv(t_vector *vector, t_info *pfinfo, va_list ap)

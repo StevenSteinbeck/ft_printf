@@ -6,25 +6,23 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:02:00 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 19:43:22 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 20:05:55 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-
+#define PREC t_handl head; head.orig = *str; int i = 90;
 void	ft_prec_nums(t_info *pfinfo, char **str)
 {
-	t_handl	head;
-
-	head.orig = *str;
-	if (pfinfo->prec == 0 && !ft_strcmp("0", *str))
+	PREC;
+	if (pfinfo->prec == 0 && !ft_strcmp("0", *str) && ++i > 90)
 	{
 		**str = '\0';
 		return ;
 	}
-	if (pfinfo->prec == -1)
+	if (pfinfo->prec == -1 && i == 90)
 		pfinfo->prec = 1;
-	if ((size_t)pfinfo->prec < ft_strlen(*str))
+	if ((size_t)pfinfo->prec < ft_strlen(*str) && ++i == 91)
 		return ;
 	head.extra = (!ISDIGIT((*str)[0]) && pfinfo->spec == 'd') ? (*str)[0] : 0;
 	if (head.extra)
@@ -32,7 +30,7 @@ void	ft_prec_nums(t_info *pfinfo, char **str)
 	head.new = ft_strnew(pfinfo->prec + !!head.extra);
 	ft_memset(head.new + !!head.extra, '0', pfinfo->prec - ft_strlen(*str));
 	ft_strcpy(head.new + pfinfo->prec - ft_strlen(*str) + !!head.extra, *str);
-	if (head.extra)
+	if (head.extra && ++i > 90)
 		head.new[0] = head.extra;
 	free(head.orig);
 	*str = head.new;
