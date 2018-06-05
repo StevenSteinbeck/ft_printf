@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 10:47:06 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/31 14:29:14 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 16:22:03 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct	s_libft
 	uintmax_t		intmx;
 	intmax_t		size;
 	char			*ret;
+	void			*new_ptr;
 }				t_libft;
 
 typedef	struct	s_uimax
