@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:50:04 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 13:58:48 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 19:34:43 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct	s_fmt
 {
 	size_t		i;
 	const char	*str;
+	const char	string[6];
 	int			res;
 }				t_fmt;
 

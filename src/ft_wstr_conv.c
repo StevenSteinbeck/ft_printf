@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:51:24 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 12:11:06 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 19:52:14 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	ft_pad_handle(pfinfo, &head.value);
 	ft_vector_append(vector, head.value);
 	free(head.value);
+	free(top->duplicate);
 	free(top);
 }
