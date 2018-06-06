@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:43:35 by stestein          #+#    #+#             */
-/*   Updated: 2018/05/11 12:33:43 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 13:14:29 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,3 @@ char	*ft_itoa(int n)
 		str[0] = '-';
 	return (str);
 }
-
-/*int		main()
-{
-	char *result = NULL;
-	int number = 123;
-	int neg_number = -1234567;
-	int i = 0;
-
-	result = ft_itoa(number);
-	return (0);
-}*/

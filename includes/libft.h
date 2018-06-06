@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 10:47:06 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 18:57:10 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 13:13:02 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,4 @@ int					ft_isnan(double num);
 void				ft_insrt_to_str(char **s1, char *s2);
 char				*ft_uimaxtoa_base(uintmax_t value, int8_t base,
 															const char *str);
-
 #endif
