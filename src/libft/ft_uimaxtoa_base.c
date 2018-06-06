@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:58:05 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 18:41:34 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 18:48:08 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ char	*ft_uimaxtoa_base(uintmax_t value, int8_t base, const char *str)
 	head = malloc(sizeof(t_libft));
 	i = value;
 	size = 1;
-	while ((i /= base))
+	head->i = 0;
+	while ((i /= base) && head->i < 10)
 		size++;
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	ret[size] = '\0';
 	i = value;
+	head->i = i;
 	ret[--size] = str[i % base];
 	while ((i /= base))
 		ret[--size] = str[i % base];

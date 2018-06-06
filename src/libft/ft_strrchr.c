@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 14:10:44 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 14:10:53 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 18:44:45 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,22 @@
 char	*ft_strrchr(const char *s, int c)
 {
 	int i;
+	int z;
 
 	i = 0;
-	while (s[i] != '\0')
+	z = 0;
+	while (s[i] != '\0' && z == 0)
+	{
+		z++;
 		i++;
-	while (i >= 0)
+	}
+	z = z + i;
+	while (i >= 0 && z >= 0)
 	{
 		if (s[i] == c)
 			return ((char *)(s + i));
 		i--;
+		z++;
 	}
 	return (0);
 }
