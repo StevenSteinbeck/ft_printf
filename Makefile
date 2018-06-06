@@ -6,7 +6,7 @@
 #    By: stestein <marvin@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/24 21:16:40 by stestein          #+#    #+#              #
-#    Updated: 2018/06/04 19:14:12 by stestein         ###   ########.fr        #
+#    Updated: 2018/06/06 13:24:29 by stestein         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,10 +69,10 @@ $(NAME): $(LIBOBJ) $(OBJ)
 
 clean:
 	@rm -rf $(OBJ) $(LIBOBJ)
-	@echo "\033[32mRemoved Object Files\033[0m"
+	@echo "\033[33mRemoved Object Files\033[0m"
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "\033[32mRemoved Object files and library\033[0m"
+	@echo "\033[31mRemoved Object files and library\033[0m"
 
 re: fclean all
