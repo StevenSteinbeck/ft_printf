@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 19:04:51 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 20:15:12 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
 	FMT;
-	FMTT;
 	top = malloc(sizeof(t_fmt));
+	FMTT;
 	if (ISLENMOD(**format))
 	{
 		top->res++;
