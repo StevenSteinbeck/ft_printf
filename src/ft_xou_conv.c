@@ -6,18 +6,18 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 19:26:48 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 15:57:15 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 12:58:10 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-# define FLAG_HH return ((unsigned char)va_arg(ap, int));
-# define FLAG_H return ((unsigned short)va_arg(ap, int));
-# define FLAG_L return (va_arg(ap, unsigned long));
-# define FLAG_LL return (va_arg(ap, unsigned long long));
-# define FLAG_J return (va_arg(ap, uintmax_t));
-# define FLAG_Z return (va_arg(ap, size_t));
+#define FLAG_HH return ((unsigned char)va_arg(ap, int));
+#define FLAG_H return ((unsigned short)va_arg(ap, int));
+#define FLAG_L return (va_arg(ap, unsigned long));
+#define FLAG_LL return (va_arg(ap, unsigned long long));
+#define FLAG_J return (va_arg(ap, uintmax_t));
+#define FLAG_Z return (va_arg(ap, size_t));
 
 uintmax_t	ft_xou_len(char length, va_list ap)
 {
@@ -74,6 +74,7 @@ void		ft_x_toupper(char *str, char spec)
 	if (head.size != 'X')
 	{
 		free(top);
+		top->size++;
 		return ;
 	}
 	while (*str)
@@ -81,6 +82,7 @@ void		ft_x_toupper(char *str, char spec)
 		if (ISALPHA(*str))
 			*str = TOUPPER(*str);
 		str++;
+		top->size++;
 	}
 	free(top);
 }

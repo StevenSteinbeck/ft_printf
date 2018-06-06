@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:51:24 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 19:52:14 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 12:56:09 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_wstr	head;
 	t_wstr	*top;
-	
+
 	top = malloc(sizeof(t_wstr));
 	head.duplicate = va_arg(ap, wchar_t *);
-	if (!head.duplicate	)
+	if (!head.duplicate)
 		head.value = ft_null_str(pfinfo);
 	else
 	{

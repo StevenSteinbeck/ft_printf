@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 18:40:18 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 15:53:49 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 12:55:16 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_vector_resize(t_vector *vector, size_t min)
 {
 	t_vect	head;
 	t_vect	*top;
-	
+
 	top = malloc(sizeof(t_vect));
 	if (!(vector->data))
 		ft_vector_init(vector, min);
