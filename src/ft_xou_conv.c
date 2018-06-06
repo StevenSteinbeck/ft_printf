@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 19:26:48 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/06 12:58:10 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 12:59:54 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,9 @@ void		ft_x_toupper(char *str, char spec)
 
 	top = malloc(sizeof(t_xou));
 	head.size = spec;
-	top->size = spec;
 	if (head.size != 'X')
 	{
 		free(top);
-		top->size++;
 		return ;
 	}
 	while (*str)
@@ -82,7 +80,6 @@ void		ft_x_toupper(char *str, char spec)
 		if (ISALPHA(*str))
 			*str = TOUPPER(*str);
 		str++;
-		top->size++;
 	}
 	free(top);
 }
