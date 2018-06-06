@@ -6,13 +6,12 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 17:02:00 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 19:40:36 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 15:32:51 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#define PREC t_handl head; head.orig = *str; int i = 90;
-#define STUFF (*str)[0] = '0';
+# define PREC t_handl head; head.orig = *str; int i = 90;
 
 void	ft_prec_nums(t_info *pfinfo, char **str)
 {
@@ -75,7 +74,10 @@ void	ft_right_just(t_info *pfinfo, char **str, char *new)
 		head.extra = (!ISDIGIT((*str)[0]) && pfinfo->spec == 'd') ? (*str)[0] : 0;
 		ft_memset(new, '0', pfinfo->width - ft_strlen(*str) + !!head.extra);
 		if (head.extra)
-			STUFF;
+		{
+			new[0] = head.extra;
+			(*str)[0] = '0';
+		}
 	}
 	else
 	{

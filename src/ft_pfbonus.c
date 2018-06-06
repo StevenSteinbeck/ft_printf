@@ -6,18 +6,18 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 16:32:05 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 19:42:43 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/04 23:48:46 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-#define FLAG_HH return ((intmax_t *)va_arg(ap, signed char *));
-#define FLAG_H return ((intmax_t *)va_arg(ap, short *));
-#define FLAG_L return ((intmax_t *)va_arg(ap, long *));
-#define FLAG_LL return ((intmax_t *)va_arg(ap, long long *));
-#define FLAG_J return ((intmax_t *)va_arg(ap, intmax_t *));
-#define FLAG_Z return ((intmax_t *)va_arg(ap, ssize_t *));
+# define FLAG_HH return ((intmax_t *)va_arg(ap, signed char *));
+# define FLAG_H return ((intmax_t *)va_arg(ap, short *));
+# define FLAG_L return ((intmax_t *)va_arg(ap, long *));
+# define FLAG_LL return ((intmax_t *)va_arg(ap, long long *));
+# define FLAG_J return ((intmax_t *)va_arg(ap, intmax_t *));
+# define FLAG_Z return ((intmax_t *)va_arg(ap, ssize_t *));
 
 char g_colors[33][2][15] = {
 	{"{green}", "\033[32m"},
@@ -59,14 +59,12 @@ t_bool		ft_pfcolors(t_vector *vector, const char **format)
 {
 	t_bonus head;
 	t_bonus	*top;
-	int		p;
 
 	top = malloc(sizeof(t_bonus));
 	while (head.i < 33)
 	{
-		p = head.i;
 		top->i = head.i;
-		if (ft_strnstr(*format, g_colors[p][0], ft_strlen(g_colors[p][0])) != 0)
+		if (ft_strnstr(*format, g_colors[head.i][0], ft_strlen(g_colors[head.i][0])) != 0)
 		{
 			top->i++;
 			ft_vector_append(vector, g_colors[head.i][1]);
