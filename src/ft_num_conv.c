@@ -6,19 +6,20 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 18:09:55 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 23:47:23 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/06 12:14:16 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-# define FLAG_HH return ((signed char)va_arg(ap, int));
-# define FLAG_H return ((short)va_arg(ap, int));
-# define FLAG_L return (va_arg(ap, long));
-# define FLAG_LL return (va_arg(ap, long long));
-# define FLAG_J return (va_arg(ap, intmax_t));
-# define FLAG_Z return (va_arg(ap, ssize_t));
-# define NUMM t_num head; t_num *top; top = malloc(sizeof(t_num));
+#define FLAG_HH return ((signed char)va_arg(ap, int));
+#define FLAG_H return ((short)va_arg(ap, int));
+#define FLAG_L return (va_arg(ap, long));
+#define FLAG_LL return (va_arg(ap, long long));
+#define FLAG_J return (va_arg(ap, intmax_t));
+#define FLAG_Z return (va_arg(ap, ssize_t));
+#define NUMM t_num head; t_num *top; top = malloc(sizeof(t_num));
+#define NUMMM if (pfinfo->spec == 'D') pfinfo->length = l;
 
 intmax_t	ft_int_len(char length, va_list ap)
 {
@@ -47,19 +48,20 @@ intmax_t	ft_int_len(char length, va_list ap)
 void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	NUMM;
-	if (pfinfo->spec == 'D')
-		pfinfo->length = l;
+	NUMMM;
 	if (pfinfo->spec == 'i' || pfinfo->spec == 'D')
 		pfinfo->spec = 'd';
 	head.val = ft_int_len(pfinfo->length, ap);
 	top->l = ':';
 	head.s = ft_imaxtoa(head.val);
-	if (pfinfo->prec != -1 && pfinfo->flags & ZER && head.s != 0 && top->l == ':')
+	if (pfinfo->prec != -1 && pfinfo->flags & ZER && head.s != 0 && \
+			top->l == ':')
 		pfinfo->flags ^= ZER;
-	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s) && head.s != 0 && top->l == ':')
+	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s) && head.s != 0 \
+			&& top->l == ':')
 		head.s[0] = '\0';
-	if (((pfinfo->flags & POS || pfinfo->flags & INV) && head.s[0] != '-')
-														&& pfinfo->spec == 'd' && top->l == ':')
+	if (((pfinfo->flags & POS || pfinfo->flags & INV) && head.s[0] != '-') \
+			&& pfinfo->spec == 'd' && top->l == ':')
 	{
 		ft_insrt_to_str(&head.s, (pfinfo->flags & INV) ? " " : "+");
 		head.s[0] = ((pfinfo->flags & POS)) ? '+' : head.s[0];
