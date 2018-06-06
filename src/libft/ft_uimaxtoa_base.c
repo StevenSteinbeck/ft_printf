@@ -6,18 +6,20 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 13:58:05 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/03 13:58:06 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 16:41:39 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_uimaxtoa_base(uintmax_t value, int8_t base, const char *str)
 {
+	t_libft		*head;
 	uintmax_t	i;
 	size_t		size;
 	char		*ret;
 
+	head = malloc(sizeof(t_libft));
 	i = value;
 	size = 1;
 	while ((i /= base))
