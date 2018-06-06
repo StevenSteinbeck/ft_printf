@@ -6,14 +6,14 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:58:12 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 19:54:07 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 20:59:59 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-# define HANDLE t_spec head; head.format = format; int i = 0;
-# define HANDLEE pfinfo->width = 0; pfinfo->prec = -1; pfinfo->spec = 'N';
-# define HANDLEEE pfinfo->flags = 0; pfinfo->length = -1; pfinfo->pset = 0;
+#define HANDLE t_spec head; head.format = format; int i = 0;
+#define HANDLEE pfinfo->width = 0; pfinfo->prec = -1; pfinfo->spec = 'N';
+#define HANDLEEE pfinfo->flags = 0; pfinfo->length = -1; pfinfo->pset = 0;
 
 t_convtbl g_convtbl[] =
 {
@@ -120,6 +120,7 @@ void	ft_pfinfo_init(t_info *pfinfo)
 	HANDLEE;
 	HANDLEEE;
 }
+
 void	ft_pct_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
 	t_spec head;
