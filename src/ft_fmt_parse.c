@@ -92,8 +92,8 @@ t_bool		ft_chk_prec(const char **format, t_info *pfinfo, va_list ap)
 t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
 	FMT;
-	top = malloc(sizeof(t_fmt));
 	FMTT;
+	top = malloc(sizeof(t_fmt));
 	if (ISLENMOD(**format))
 	{
 		top->res++;

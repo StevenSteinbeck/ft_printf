@@ -11,128 +11,120 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#define HANDLE t_spec head; head.format = format; int i = 0;
-#define HANDLEE pfinfo->width = 0; pfinfo->prec = -1; pfinfo->spec = 'N';
-#define HANDLEEE pfinfo->flags = 0; pfinfo->length = -1; pfinfo->pset = 0;
+# define HANDLE t_spec head; head.format = format; int i = 0;
+# define HANDLEE pfinfo->width = 0; pfinfo->prec = -1; pfinfo->spec = 'N';
+# define HANDLEEE pfinfo->flags = 0; pfinfo->length = -1; pfinfo->pset = 0;
 
-t_convtbl g_convtbl[] =
+#include "libftprintf.h"
+
+# define FLAG_HH return ((signed char)va_arg(ap, int));
+# define FLAG_H return ((short)va_arg(ap, int));
+# define FLAG_L return (va_arg(ap, long));
+# define FLAG_LL return (va_arg(ap, long long));
+# define FLAG_J return (va_arg(ap, intmax_t));
+# define FLAG_Z return (va_arg(ap, ssize_t));
+# define NUMM t_num head; t_num *top; top = malloc(sizeof(t_num));
+
+intmax_t	ft_int_len(char length, va_list ap)
 {
-	{'d', &ft_num_conv},
-	{'D', &ft_num_conv},
-	{'i', &ft_num_conv},
-	{'p', &ft_hex_conv},
-	{'o', &ft_octal_conv},
-	{'O', &ft_octal_conv},
-	{'x', &ft_hex_conv},
-	{'X', &ft_hex_conv},
-	{'u', &ft_uns_conv},
-	{'U', &ft_uns_conv},
-	{'s', &ft_str_conv},
-	{'S', &ft_wstr_conv},
-	{'c', &ft_chr_conv},
-	{'C', &ft_chr_conv},
-	{'b', &ft_binary_conv},
-	{'f', &ft_float_conv},
-	{'n', &ft_none_conv},
-	{'%', &ft_pct_conv}
-};
+	t_num	head;
+	t_num	*top;
 
-void	ft_get_conv(t_vector *vector, t_info *pfinfo, va_list ap)
-{
-	t_spec head;
-	t_spec *top;
-
-	top = malloc(sizeof(t_spec));
-	head.i = -1;
-	while (++head.i < TOTAL_SPECS)
-	{
-		top->i = head.i;
-		if (pfinfo->spec == g_convtbl[head.i].spec)
-		{
-			g_convtbl[head.i].f(vector, pfinfo, ap);
-			free(top);
-			return ;
-		}
-	}
-	top->i = head.i;
+	top = malloc(sizeof(t_num));
+	head.l = length;
+	top->l = head.l;
 	free(top);
-	ft_pct_conv(vector, pfinfo, ap);
+	if (head.l == hh)
+		FLAG_HH;
+	if (head.l == h)
+		FLAG_H;
+	if (head.l == l)
+		FLAG_L;
+	if (head.l == ll)
+		FLAG_LL;
+	if (head.l == j)
+		FLAG_J;
+	if (head.l == z)
+		FLAG_Z;
+	return (va_arg(ap, int));
 }
 
-void	ft_handle_spec(t_vector *vector, const char **format,
-													t_info *pfinfo, va_list ap)
+void		ft_num_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	HANDLE;
-	if (**head.format == '{' && i < 90)
-		if (ft_pfcolors(vector, head.format) == true)
-			return ;
-	while (1)
+	NUMM;
+	if (pfinfo->spec == 'D')
+		pfinfo->length = l;
+	if (pfinfo->spec == 'i' || pfinfo->spec == 'D')
+		pfinfo->spec = 'd';
+	head.val = ft_int_len(pfinfo->length, ap);
+	top->l = ':';
+	head.s = ft_imaxtoa(head.val);
+	if (pfinfo->prec != -1 && pfinfo->flags & ZER && head.s != 0 && top->l == ':')
+		pfinfo->flags ^= ZER;
+	if (pfinfo->prec == 0 && !ft_strcmp("0", head.s) && head.s != 0 && top->l == ':')
+		head.s[0] = '\0';
+	if (((pfinfo->flags & POS || pfinfo->flags & INV) && head.s[0] != '-')
+														&& pfinfo->spec == 'd' && top->l == ':')
 	{
-		i++;
-		if (ft_chk_flags(head.format, pfinfo))
-			continue ;
-		if (ft_chk_width(head.format, pfinfo, ap))
-			continue ;
-		if (ft_chk_prec(head.format, pfinfo, ap))
-			continue ;
-		if (ft_chk_len(head.format, pfinfo))
-			continue ;
-		if (**head.format == '\0')
-			return ;
-		pfinfo->spec = *(*head.format)++;
-		break ;
+		ft_insrt_to_str(&head.s, (pfinfo->flags & INV) ? " " : "+");
+		head.s[0] = ((pfinfo->flags & POS)) ? '+' : head.s[0];
 	}
-	ft_get_conv(vector, pfinfo, ap);
-	i = i + 90;
+	ft_prec_nums(pfinfo, &head.s);
+	ft_pad_handle(pfinfo, &head.s);
+	ft_vector_append(vector, head.s);
+	free(head.s);
+	free(top);
 }
 
-int		ft_strprintf(char **ret, const char *format, va_list ap)
+void		ft_octal_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	t_spec		head;
-	t_vector	vector;
-	t_info		pfinfo;
+	t_num	head;
+	t_num	*top;
 
-	ft_pfinfo_init(&pfinfo);
-	if (ft_vector_init(&vector, ft_strlen(format) + 50) == FAILED)
-		return (FAILED);
-	while (*format)
-	{
-		head.i = 0;
-		while (format[head.i] && format[head.i] != '%')
-			head.i++;
-		ft_vector_nappend(&vector, (char *)format, head.i);
-		format += head.i;
-		if (*format == '%')
-		{
-			if (*(++format) == 0)
-				break ;
-			ft_handle_spec(&vector, &format, &pfinfo, ap);
-		}
-		ft_pfinfo_init(&pfinfo);
-	}
-	*ret = ft_strndup(vector.data, vector.len);
-	ft_vector_free(&vector);
-	return (vector.len);
+	top = malloc(sizeof(t_num));
+	if (pfinfo->spec == 'O')
+		pfinfo->length = l;
+	head.octal = ft_xou_len(pfinfo->length, ap);
+	head.s = ft_uimaxtoa_base(head.octal, 8, "01234567");
+	top->s = head.s;
+	ft_handle_xou(&head.s, pfinfo);
+	ft_vector_append(vector, head.s);
+	free(top);
+	free(head.s);
 }
 
-void	ft_pfinfo_init(t_info *pfinfo)
+void		ft_hex_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	HANDLEE;
-	HANDLEEE;
+	t_num	head;
+	t_num	*top;
+
+	top = malloc(sizeof(t_num));
+	if (pfinfo->spec == 'p')
+		pfinfo->length = j;
+	head.hex = ft_xou_len(pfinfo->length, ap);
+	head.s = ft_uimaxtoa_base(head.hex, 16, "0123456789abcdef");
+	top->s = head.s;
+	if (pfinfo->spec == 'p' && pfinfo->flags & ZER && pfinfo->pset)
+		pfinfo->flags ^= ZER;
+	ft_handle_xou(&head.s, pfinfo);
+	ft_vector_append(vector, head.s);
+	free(top);
+	free(head.s);
 }
 
-void	ft_pct_conv(t_vector *vector, t_info *pfinfo, va_list ap)
+void		ft_uns_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 {
-	t_spec head;
-	t_spec *new;
+	t_num	head;
+	t_num	*top;
 
-	new = malloc(sizeof(t_spec));
-	(void)ap;
-	head.str = ft_strnew(1);
-	new->str = head.str;
-	*head.str = pfinfo->spec;
-	ft_pad_handle(pfinfo, &head.str);
-	ft_vector_append(vector, head.str);
-	free(head.str);
-	free(new);
+	top = malloc(sizeof(t_num));
+	if (pfinfo->spec == 'U')
+		pfinfo->length = l;
+	head.unsonian = ft_xou_len(pfinfo->length, ap);
+	head.s = ft_uimaxtoa_base(head.unsonian, 10, "0123456789");
+	top->s = head.s;
+	ft_handle_xou(&head.s, pfinfo);
+	ft_vector_append(vector, head.s);
+	free(top);
+	free(head.s);
 }
