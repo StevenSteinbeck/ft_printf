@@ -6,19 +6,17 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 15:52:02 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 19:27:20 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 15:17:57 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#define VAS t_printf *head; const char *retrn; head = NULL;
-#define DP va_list ap; t_printf *head; int retrn;
 
 int		ft_printf(const char *format, ...)
 {
-	va_list		ap;
-	t_printf	*head;
-	int			save;
+	va_list ap;
+	t_printf *head;
+	int	save;
 
 	save = 0;
 	head = malloc(sizeof(t_printf));
@@ -40,7 +38,10 @@ int		ft_printf(const char *format, ...)
 
 int		ft_vasprintf(char **ret, const char *format, va_list ap)
 {
-	VAS;
+	t_printf *head;
+	const char	*retrn;
+
+	head = NULL;
 	head = malloc(sizeof(t_printf));
 	head->format = format;
 	if (*head->format == '\0')
@@ -67,9 +68,9 @@ int		ft_vasprintf(char **ret, const char *format, va_list ap)
 
 int		ft_sprintf(char *str, const char *format, ...)
 {
-	va_list		ap;
-	t_printf	*head;
-	int			retrn;
+	va_list ap;
+	t_printf *head;
+	int		retrn;
 
 	head = NULL;
 	if (!str || !format)
@@ -89,7 +90,10 @@ int		ft_sprintf(char *str, const char *format, ...)
 
 int		ft_snprintf(char *str, size_t size, const char *format, ...)
 {
-	DP;
+	va_list ap;
+	t_printf *head;
+	int		retrn;
+
 	head = NULL;
 	head = malloc(sizeof(t_printf));
 	if (!str || !format)
@@ -116,9 +120,9 @@ int		ft_snprintf(char *str, size_t size, const char *format, ...)
 
 int		ft_dprintf(int fd, const char *format, ...)
 {
-	va_list		ap;
-	t_printf	*head;
-	int			retrn;
+	va_list ap;
+	t_printf *head;
+	int		retrn;
 
 	head = NULL;
 	head = malloc(sizeof(t_printf));
