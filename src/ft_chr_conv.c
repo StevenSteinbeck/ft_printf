@@ -6,22 +6,21 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:09:09 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 13:08:44 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 18:58:43 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-# define UNICODE t_chr head; int i = 0;
-# define CONVERT char *str = NULL; t_chr head; int i = 7;
+#define UNICODE t_chr head; int i = 0;
+#define CONVERT char *str = NULL; t_chr head; int i = 7;
 
 void	ft_unicode_conv(wchar_t chr, char *str)
 {
 	UNICODE;
-
 	head.chr = chr;
 	head.str = str;
 	if (head.chr < (MB_CUR_MAX == 1 ? 0xFF : 0x7F) && i == 0)
-				head.str[0] = (unsigned char)head.chr;
+		head.str[0] = (unsigned char)head.chr;
 	else if (head.chr < (1 << 11) && (i == 0 || i > 5))
 	{
 		head.str[0] = (unsigned char)((head.chr >> 6) | 0xC0);
@@ -99,7 +98,7 @@ void	ft_chr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 	if (pfinfo->spec == 'C' || pfinfo->length == l)
 	{
 		if (i != 7)
-			str[0] =  '-';
+			str[0] = '-';
 		head.null = ft_handle_wchar(&str, ap);
 		if (head.null && i == 7)
 			str[0] = head.null;

@@ -6,19 +6,19 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 17:36:58 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/04 19:53:13 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 19:04:51 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-# define FMT const char	lengths[] = "hhlljz"; t_fmt head; t_fmt *top; top = malloc(sizeof(t_fmt));
-# define FMTT head.str = lengths; head.res = 0; top->res = 0;
-# define FMTTT t_fmt head; int i = 0; head.res = 0;
+#define FMT const char lengths[] = "hhlljz"; t_fmt head; t_fmt *top;
+#define FMTT head.str = lengths; head.res = 0; top->res = 0;
+#define FMTTT t_fmt head; int i = 0; head.res = 0;
 
 t_bool		ft_chk_flags(const char **format, t_info *pfinfo)
 {
 	const char	flags[] = "-+ 0#";
-	t_fmt *head;
+	t_fmt		*head;
 
 	head = malloc(sizeof(t_fmt));
 	head->str = flags;
@@ -93,6 +93,7 @@ t_bool		ft_chk_len(const char **format, t_info *pfinfo)
 {
 	FMT;
 	FMTT;
+	top = malloc(sizeof(t_fmt));
 	if (ISLENMOD(**format))
 	{
 		top->res++;

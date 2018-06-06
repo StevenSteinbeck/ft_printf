@@ -6,7 +6,7 @@
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/19 10:47:06 by stestein          #+#    #+#             */
-/*   Updated: 2018/06/05 16:22:03 by stestein         ###   ########.fr       */
+/*   Updated: 2018/06/05 18:57:10 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 # define STEVEN int i = 0; int w = 0; int pos = 0; char *str;
 # define TRIM 	int i = 0; char *str; int n = 0;
 
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
 # include <stdarg.h>
-
 
 # define ABS(a) (val * ((val > 0) * 2 - 1))
 # define ARRLEN(a) (sizeof(a)/sizeof(a[0]))
@@ -46,7 +44,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct	s_libft
+typedef struct		s_libft
 {
 	int				i;
 	unsigned char	a;
@@ -54,14 +52,14 @@ typedef struct	s_libft
 	intmax_t		size;
 	char			*ret;
 	void			*new_ptr;
-}				t_libft;
+}					t_libft;
 
-typedef	struct	s_uimax
+typedef	struct		s_uimax
 {
-	uintmax_t	i_val;
-	size_t		size;
-	char		*retrn;
-}		t_uimax;
+	uintmax_t		i_val;
+	size_t			size;
+	char			*retrn;
+}					t_uimax;
 
 int					ft_atoi(const char *str);
 size_t				ft_strlen(const char *str);
