@@ -117,11 +117,11 @@ void	ft_wstr_conv(t_vector *vector, t_info *pfinfo, va_list ap)
 		head.duplicate = ft_wstrdup(head.duplicate);
 		ft_prec_wstr(pfinfo, head.duplicate);
 		head.value = ft_wstr_to_str(head.duplicate);
+		free(top->duplicate);
 		free(head.duplicate);
 	}
 	ft_pad_handle(pfinfo, &head.value);
 	ft_vector_append(vector, head.value);
 	free(head.value);
-	free(top->duplicate);
 	free(top);
 }
