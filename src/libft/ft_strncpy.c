@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: stestein <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/03 14:10:25 by stestein          #+#    #+#             */
+/*   Created: 2018/05/12 14:10:25 by stestein          #+#    #+#             */
 /*   Updated: 2018/06/03 14:10:26 by stestein         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
 	size_t i;
+	size_t cpy;
 
 	i = 0;
 	while ((i < len) && src[i])
@@ -22,7 +23,8 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 		dst[i] = src[i];
 		i++;
 	}
-	while (i < len)
+	cpy = i;
+	while (i < len && cpy >= 0)
 	{
 		dst[i] = '\0';
 		i++;
