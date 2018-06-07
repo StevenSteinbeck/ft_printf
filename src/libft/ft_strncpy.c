@@ -24,7 +24,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 		i++;
 	}
 	cpy = i;
-	while (i < len && cpy >= 0)
+	while (i < len && cpy > 0)
 	{
 		dst[i] = '\0';
 		i++;
