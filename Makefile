@@ -6,13 +6,13 @@
 #    By: stestein <marvin@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/24 21:16:40 by stestein          #+#    #+#              #
-#    Updated: 2018/06/06 13:24:29 by stestein         ###   ########.fr        #
+#    Updated: 2018/06/18 13:01:56 by stestein         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-CFLAGS += -g -Wall -Wextra -Werror
+CFLAGS += -Wall -Wextra -Werror
 CFLAGS += -I includes/
 
 FILES = ft_printf.c \
